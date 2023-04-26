@@ -7,10 +7,6 @@ import EmployeeHome from './pages/Employee/EmployeeHome';
 import Track from './pages/Employee/Track';
 
 
-import Login from './pages/Login';
-import SignUp from './pages/SignUp';
-import Home from './pages/Home';
-
 
 function App() {
   return (
@@ -23,9 +19,7 @@ function App() {
         <Route path='/Track' element={<Track/>} /> */}
         <Route path='/Track' element={<Track/>} />
 
-        <Route path='/' element={<SignUp/>} />
-        <Route path='/Login' element={<Login/>} />
-        <Route path='/Home' element={<Home/>} />
+        
 
       </Routes>
     </Router>
