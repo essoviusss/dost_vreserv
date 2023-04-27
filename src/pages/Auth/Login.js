@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import '../Auth/components/Login.css';
 import { useNavigate } from "react-router-dom";
+import TextField from '@mui/material/TextField';
 
 export default function Login(){
     const [username, setUsername] = useState("");
@@ -60,26 +61,48 @@ export default function Login(){
     
 
     return(
-        <div>
-            <div>
-                <h2>Login</h2>
-                </div>
-                    <div>
-                        <select value={role} onChange={(event) => setRole(event.target.value)}>
-                            <option value="none">Select Role</option>
-                            <option value="Employee">Employee</option>
-                            <option value="Driver">Driver</option>
-                        </select>
-                    </div>
-                    <div>
-                        <input type="text" id="username" placeholder="username" value={username} onChange={(event) => setUsername(event.target.value)}></input>
-                    </div>
-                    <div>
-                        <input type="password" id="password" placeholder="password" value={password} onChange={(event) => setPassword(event.target.value)}></input>
-                    </div>
-                    <div>
-                        <button onClick={signIn}>Login</button>
-                    </div>
+        <div className="login-container">
+          <div class="column left">
+          <div className="display-container">
+          </div>
+          </div>
+          <div class="column right">
+          <div className="form-container">
+            <div className="login-header">
+              <h2>Login</h2>
+            </div>
+            <div className="login-field">
+              <select value={role} onChange={(event) => setRole(event.target.value)}>
+                <option value="none">Select Role</option>
+                <option value="Employee">Employee</option>
+                <option value="Driver">Driver</option>
+              </select>
+            </div>
+            <div className="login-field">
+              <TextField
+                id="username"
+                label="Username"
+                placeholder="username"
+                multiline
+                variant="outlined"
+                style={{ width: '100%' }}
+              />
+            </div>
+            <div className="login-field">
+              <TextField
+                id="password"
+                label="Password"
+                placeholder="password"
+                multiline
+                variant="outlined"
+                style={{ width: '100%' }}
+              />
+            </div>
+            <div className="login-button">
+              <button onClick={signIn}>Login</button>
+            </div>
+          </div>  
+          </div>
         </div>
     );
 }
