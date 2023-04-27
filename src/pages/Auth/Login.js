@@ -42,7 +42,7 @@ export default function Login(){
           if (userRole === "Employee" && role === "Employee") {
             alert("Login Successful");
             localStorage.setItem("token", jwtToken);
-            navigate("/EmployeeHome", { replace: true });
+            navigate("/EmpHome", { replace: true });
           }else if (userRole === "Driver" && role === "Driver") {
             alert("Login Successful");
             localStorage.setItem("token", jwtToken);
@@ -81,6 +81,7 @@ export default function Login(){
             <div className="login-field">
               <TextField
                 id="username"
+                onChange={e => setUsername(e.target.value)}
                 label="Username"
                 placeholder="username"
                 multiline
@@ -91,6 +92,7 @@ export default function Login(){
             <div className="login-field">
               <TextField
                 id="password"
+                onChange={e => setPassword(e.target.value)}
                 label="Password"
                 placeholder="password"
                 multiline

@@ -2,11 +2,11 @@ import React from "react";
 // import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect } from 'react';
-import '../Employee/components/EmployeeHome.css';
+import '../Employee/components/EmpHome.css';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth'; 
 
-export default function EmployeeHome(){
+export default function EmpHome(){
     const navigate = useNavigate();
     const isLoggedIn = useAuth(); // Use the useAuth hook
 
@@ -30,17 +30,17 @@ export default function EmployeeHome(){
                 <h2>LOGO</h2>
                 <ul>
                     <li>
-                        <Link to="/Dashboard">Dashboard</Link>
+                        <Link to="/EmpDashboard">Dashboard</Link>
                     </li>
                 </ul>
                 <ul>
                     <li>
-                        <Link to="/RequestForm">Request</Link>
+                        <Link to="/EmpTravelRequest">Travel Request</Link>
                     </li>
                 </ul>
                 <ul>
                     <li>
-                        <Link to="/Track">Track</Link>
+                        <Link to="/EmpTrack">Track</Link>
                     </li>
                 </ul>
                 
@@ -48,34 +48,12 @@ export default function EmployeeHome(){
             </div>
             <div className="main_content">
                 <div className="header">
-                    Request for Use of Vehicle
                     <button onClick={logout} style={{ marginLeft: "10px" }}>
                         Logout
                     </button>
                 </div>
-            <div className="info">
-                <h4>Step 1: Choosing Date & Time, Vehicle and Driver</h4>
-                <div className="container">
-                    <div className="con-datetime"></div>
-                    <p>DATE AND TIME</p>
-                </div>
-            </div>
             </div>
         </div>
     );
 }
 
-            // {/* Homepage pero navbar lang present dapat */}
-            // <button onClick={()=>navigate(-1)}>Back</button>
-            // <nav>
-            //     <p>Request for use of vehicle</p>
-            //     <ul>
-            //         <li>
-            //             <Link to="/RequestForm">Request</Link>
-            //         </li>
-            //         <li>
-            //             <Link to="/Track">Track</Link>
-            //         </li>
-            //     </ul>
-            // </nav>
-            // <Outlet/>
