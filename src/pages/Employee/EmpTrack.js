@@ -1,7 +1,20 @@
+import React from "react";
+import {useNavigate } from "react-router-dom";
+import EmpHome from "./EmpHome";
+
 export default function EmpTrack(){
-    return (
+
+    const navigate = useNavigate();
+
+    return(
         <div>
-            <center><h2>DASHBOARD</h2></center>
+            <EmpHome />
+            <div className="main-content">
+
+                <div>
+                    <input type="text"></input>
+                </div>
+            </div>
         </div>
     );
 }
