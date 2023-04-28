@@ -1,7 +1,12 @@
+import React from "react";
+import EmpHome from "./EmpHome";
+import '../Employee/components/EmpDashboard.css';
+
 export default function EmpDashboard(){
-    return (
+    return(
         <div>
-            <center><h2>DASHBOARD</h2></center>
+            <EmpHome />
+            <center><h1>Dashboard</h1></center>
         </div>
     );
 }
