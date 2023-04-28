@@ -15,7 +15,7 @@ export default function EmpHome(){
         if (!isLoggedIn && token === null) {
           navigate('/');
         }
-      }, [isLoggedIn, navigate]);
+    }, [isLoggedIn, navigate]);
 
       const logout = () => {
         localStorage.removeItem("token");

@@ -11,11 +11,18 @@ export default function Login(){
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-          navigate("/EmpHome", { replace: true });
+      const token = localStorage.getItem("token");
+      const userRole = localStorage.getItem("userRole");
+  
+      if (token) {
+        if (userRole === "Employee") {
+            navigate("/EmpHome", { replace: true });
+        } else if (userRole === "Driver") {
+            navigate("/DriverHome", { replace: true });
         }
-      }, [navigate]);
+      }
+    }, [navigate]);
+  
 
     const signIn = async () => {
         const url = "http://localhost/vreserv_api/login.php";
@@ -42,14 +49,16 @@ export default function Login(){
           if (userRole === "Employee" && role === "Employee") {
             alert("Login Successful");
             localStorage.setItem("token", jwtToken);
+            localStorage.setItem("userRole", userRole); // Add this line
             navigate("/EmpHome", { replace: true });
-          }else if (userRole === "Driver" && role === "Driver") {
+        } else if (userRole === "Driver" && role === "Driver") {
             alert("Login Successful");
             localStorage.setItem("token", jwtToken);
+            localStorage.setItem("userRole", userRole); // Add this line
             navigate("/DriverHome", { replace: true });
-          }else {
+        } else {
             alert("User does not exist");
-          }
+        }
         } catch (error) {
           console.error("Error:", error);
           alert(error);
@@ -92,6 +101,7 @@ export default function Login(){
             <div className="login-field">
               <TextField
                 id="password"
+                type="password"
                 onChange={e => setPassword(e.target.value)}
                 label="Password"
                 placeholder="password"

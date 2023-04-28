@@ -1,10 +1,25 @@
 import React from "react";
-import {useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import EmpHome from "./EmpHome";
+import dayjs from "dayjs";
 
 export default function EmpStep3(){
-
     const navigate = useNavigate();
+    const location = useLocation();
+    const {
+        selectedVehicle,
+        selectedDriver,
+        departureDate,
+        arrivalDate,
+        address,
+        purpose,
+        numPassengers,
+        passengerNames,
+        requestedBy
+    } = location.state;
+
+    const departureDateString = dayjs(departureDate).format('MM/DD/YYYY h:mm A');
+    const arrivalDateString = dayjs(arrivalDate).format('MM/DD/YYYY h:mm A');
 
     return(
         <div>
@@ -17,12 +32,16 @@ export default function EmpStep3(){
                         <img></img>
                     </div>
                     <div>
-                        <label>A1M 904 HILUX</label>
+                        <label>Destination:</label>
+                        <label>{address}</label>
+                    </div>
+                    <div>
+                        <label>{selectedVehicle}</label>
                         <label>Vehicle to be requested</label>
                     </div>
 
                     <div>
-                        <label>David H. LIM III</label>
+                        <label>{selectedDriver}</label>
                         <label>Name of the Driver</label>
                     </div>
 
@@ -37,18 +56,12 @@ export default function EmpStep3(){
                         <label>SCHEDULE OF TRAVEL</label>
                     </div>
                     <div>
-                        <label>Date:</label>
-                        <label>January 5-9, 2024</label>
+                        <label>Departure</label>
+                        <label>{departureDateString}</label>
                     </div>
-
                     <div>
-                        <label>Time of Departure:</label>
-                        <label>8:00 AM</label>
-                    </div>
-                    
-                    <div>
-                        <label>Time of Return to Garage:</label>
-                        <label>5:00 PM</label>
+                        <label>Arrival</label>
+                        <label>{arrivalDateString}</label>
                     </div>                  
                 </div>
 
@@ -59,20 +72,19 @@ export default function EmpStep3(){
 
                     <div>
                         <label>Total No. of Passengers:</label>
-                        <label>2</label>
+                        <label>{numPassengers}</label>
                     </div>
                     <div>
                         <label>Name of Passenger/s:</label>
-                        <label>Juan Dela Cruz</label>
-                        <label>Maria Dela Cruz</label>
+                        <label>{passengerNames}</label>
                     </div>
                     <div>
                         <label>Purpose:</label>
-                        <label>To collect materials</label>
+                        <label>{purpose}</label>
                     </div>
                     <div>
                         <label>Requested by:</label>
-                        <label>Juan Dela Cruz</label>
+                        <label>{requestedBy}</label>
                     </div>
                 </div>
 
