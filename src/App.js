@@ -14,6 +14,10 @@ import EmpStep2 from './pages/Employee/EmpStep2';
 import EmpStep3 from './pages/Employee/EmpStep3';
 import EmpStep4 from './pages/Employee/EmpStep4';
 import EmpSummary from './pages/Employee/EmpSummary';
+import DrvDashboard from './pages/Driver/DrvDashboard';
+import DrvTravels from './pages/Driver/DrvTravels';
+import EmpEditStep1 from './pages/Employee/EmpEditStep1';
+import EmpEditStep2 from './pages/Employee/EmpEditStep2';
 
 function App() {
   const apiKey = 'AIzaSyAfwnnpqgJEIWC8xyJWHJJzc5t-JndFKjg';
@@ -36,7 +40,11 @@ function App() {
         <Route path="/EmpStep3" element={<EmpStep3 />} />
         <Route path="/EmpStep4" element={<EmpStep4 />} />
         <Route path="/EmpTrack" element={<EmpTrack />} />
+        <Route path="/EmpEditStep1" element={<EmpEditStep1 />} />
+        <Route path="/EmpEditStep2" element={<EmpEditStep2 />} />
         <Route path="/EmpSummary" element={<EmpSummary />} />
+        <Route path="/DrvDashboard" element={<DrvDashboard />} />
+        <Route path="/DrvTravels" element={<DrvTravels />} />
       </Routes>
     </Router>
   );
