@@ -105,7 +105,7 @@ export default function Login(){
   
       if (token) {
         if (userRole === "Employee") {
-            navigate("/EmpHome", { replace: true });
+            navigate("/EmpDashboard", { replace: true });
         } else if (userRole === "Driver") {
             navigate("/DriverHome", { replace: true });
         }
@@ -144,7 +144,7 @@ export default function Login(){
             alert("Login Successful");
             localStorage.setItem("token", jwtToken);
             localStorage.setItem("userRole", userRole); // Add this line
-            navigate("/EmpHome", { replace: true });
+            navigate("/EmpDashboard", { replace: true });
         } else if (userRole === "Driver" && role === "Driver") {
             alert("Login Successful");
             localStorage.setItem("token", jwtToken);

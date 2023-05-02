@@ -1,0 +1,11 @@
+.flex-container {
+    display: flex;
+  }
+  
+  .flex-container > div {
+    margin: 2px;
+    padding: 2px;
+  }
+  .edit-btn{
+    width: 5%;
+  }

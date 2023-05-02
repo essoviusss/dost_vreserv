@@ -1,17 +1,29 @@
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+// import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect } from 'react';
+import '../Employee/components/EmpHome.css';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth'; 
 
-export default function DriverHome(){
+
+export default function DrvHome(){
+
     const navigate = useNavigate();
-    const isLoggedIn = useAuth(); // Use the useAuth hook
+    const isLoggedIn = useAuth(); 
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!isLoggedIn && token === null) {
           navigate('/');
         }
-    }, [isLoggedIn, navigate]);
+      }, [isLoggedIn, navigate]);
+
+      
+    
+// Use the useAuth hook
+
+   
 
     const logout = () => {
         localStorage.removeItem("token");
@@ -19,10 +31,29 @@ export default function DriverHome(){
         navigate("/", { replace: true });
     };
     return(
-        <div>
-            <button onClick={logout}>
-                Logout
-            </button>
+        <div className="wrapper">
+            <div className="sidebar">
+                <h2>LOGO</h2>
+                <ul>
+                    <li>
+                        <Link to="/DrvDashboard">Dashboard</Link>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <Link to="/DrvTravels">Travels</Link>
+                    </li>
+                </ul>                
+
+            </div>
+            <div className="main_content">
+                <div className="header">
+                    <button onClick={logout} style={{ marginLeft: "10px" }}>
+                        Logout
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }
+
