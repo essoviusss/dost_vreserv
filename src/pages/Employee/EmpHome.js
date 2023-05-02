@@ -8,7 +8,7 @@ import useAuth from '../../hooks/useAuth';
 
 export default function EmpHome(){
     const navigate = useNavigate();
-    const isLoggedIn = useAuth(); // Use the useAuth hook
+    const isLoggedIn = useAuth(); 
 
     useEffect(() => {
         const token = localStorage.getItem("token");
