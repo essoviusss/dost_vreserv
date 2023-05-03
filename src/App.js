@@ -18,35 +18,38 @@ import DrvDashboard from './pages/Driver/DrvDashboard';
 import DrvTravels from './pages/Driver/DrvTravels';
 import EmpEditStep1 from './pages/Employee/EmpEditStep1';
 import EmpEditStep2 from './pages/Employee/EmpEditStep2';
+import { FormDataProvider } from './pages/Employee/FormDataContext';
 
 function App() {
-  const apiKey = 'AIzaSyAfwnnpqgJEIWC8xyJWHJJzc5t-JndFKjg';
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
+      <FormDataProvider>
+        <Routes>
+            <Route path="/" element={<Login />} />
 
-        <Route path="/EmpHome" element={<RoleGuard requiredRole="Employee" />}>
-          <Route index element={<EmpHome />} />
-        </Route>
-        <Route path="/DriverHome" element={<RoleGuard requiredRole="Driver" />}>
-          <Route index element={<DriverHome />} />
-        </Route>
+            <Route path="/EmpHome" element={<RoleGuard requiredRole="Employee" />}>
+              <Route index element={<EmpHome />} />
+            </Route>
+            <Route path="/DriverHome" element={<RoleGuard requiredRole="Driver" />}>
+              <Route index element={<DriverHome />} />
+            </Route>
 
-        <Route path="/EmpDashboard" element={<EmpDashboard />} />
-        <Route path="/EmpTravelRequest" element={<EmpTravelRequest />} />
-        <Route path="/EmpStep1" element={<EmpStep1 />} />
-        <Route path="/EmpStep2" element={<EmpStep2 />} />
-        <Route path="/EmpStep3" element={<EmpStep3 />} />
-        <Route path="/EmpStep4" element={<EmpStep4 />} />
-        <Route path="/EmpTrack" element={<EmpTrack />} />
-        <Route path="/EmpEditStep1" element={<EmpEditStep1 />} />
-        <Route path="/EmpEditStep2" element={<EmpEditStep2 />} />
-        <Route path="/EmpSummary" element={<EmpSummary />} />
-        <Route path="/DrvDashboard" element={<DrvDashboard />} />
-        <Route path="/DrvTravels" element={<DrvTravels />} />
-      </Routes>
+          <Route path="/EmpDashboard" element={<EmpDashboard />} />
+          <Route path="/EmpTravelRequest" element={<EmpTravelRequest />} />
+          <Route path="/EmpStep1" element={<EmpStep1 />} />
+          <Route path="/EmpStep2" element={<EmpStep2 />} />
+          <Route path="/EmpStep3" element={<EmpStep3 />} />
+          <Route path="/EmpStep4" element={<EmpStep4 />} />
+          <Route path="/EmpTrack" element={<EmpTrack />} />
+          <Route path="/EmpEditStep1" element={<EmpEditStep1 />} />
+          <Route path="/EmpEditStep2" element={<EmpEditStep2 />} />
+          <Route path="/EmpSummary" element={<EmpSummary />} />
+          <Route path="/DrvDashboard" element={<DrvDashboard />} />
+          <Route path="/DrvTravels" element={<DrvTravels />} />
+        </Routes>
+      </FormDataProvider>
     </Router>
+    
   );
 }
 

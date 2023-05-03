@@ -5,7 +5,7 @@ import EmpHome from "./EmpHome";
 import { useLocation } from "react-router-dom";
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import axios from 'axios';
-import dayjs from "dayjs";
+import { useFormData } from "./FormDataContext";
 
 const containerStyle = {
     width: '100%',
@@ -18,26 +18,24 @@ const containerStyle = {
   };
   const API_KEY = 'AIzaSyAfwnnpqgJEIWC8xyJWHJJzc5t-JndFKjg';
 
-export default function EmpStep2(){
+function EmpStep2(){
+    const { formData, updateFormData } = useFormData();
     const navigate = useNavigate();
     const location = useLocation();
     //value step 1
-    const { selectedVehicle, selectedDriver, departureDate, arrivalDate } = location.state;
-    const departureDateString = dayjs(departureDate).format('MM/DD/YYYY h:mm A');
-    const arrivalDateString = dayjs(arrivalDate).format('MM/DD/YYYY h:mm A');
-
     const [loc, setLoc] = useState(defaultCenter);
 
-    //value step 2
-    const [address, setAddress] = useState('');
-    const [purpose, setPurpose] = useState('');
-    const [numPassengers, setNumPassengers] = useState(0);
-    const [passengerNames, setPassengerNames] = useState([]);
-    const [requestedBy, setRequestedBy] = useState([]);
+    //Formdata
+    const [address, setAddress] = useState(formData.address || '');
+    const [purpose, setPurpose] = useState(formData.purpose || '');
+    const [numPassengers, setNumPassengers] = useState(formData.numPassengers || 0);
+    const [passengerNames, setPassengerNames] = useState(formData.passengerNames || []);
+    const [requestedBy, setRequestedBy] = useState(formData.requestedBy || []);
+
 
     const handleNumPassengersChange = (e) => {
         const num = parseInt(e.target.value, 10);
-        if (isNaN(num)) {
+        if (isNaN(num) || num < 0) {
           setNumPassengers(0);
           setPassengerNames([]);
         } else {
@@ -46,7 +44,7 @@ export default function EmpStep2(){
           const tempPassengerNames = Array(clampedNum).fill('');
           setPassengerNames(tempPassengerNames);
         }
-    };
+      };      
     
       const handlePassengerNameChange = (e, index) => {
         const updatedPassengerNames = [...passengerNames];
@@ -70,32 +68,20 @@ export default function EmpStep2(){
         }
       };
 
-      const pinIconURL = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
-    
-      const handleNextButtonClick = () => {
-        navigate("/EmpStep3", {
-          state: {
-            selectedVehicle,
-            selectedDriver,
-            departureDate,
-            arrivalDate,
-            address,
-            purpose,
-            numPassengers,
-            passengerNames,
-            requestedBy
-          }
-        });
-      };
-      
+    const pinIconURL = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+    const nextButton = () => {
+        updateFormData("address", address);
+        updateFormData("purpose", purpose);
+        updateFormData("numPassengers", numPassengers);
+        updateFormData("passengerNames", passengerNames);
+        updateFormData("requestedBy", requestedBy);
+        navigate("/EmpStep3");
+    }
     
     return(
         <div>
             <EmpHome />
-            
             <div className="main-content">
-            <label>{departureDateString}</label>
-            <label>{arrivalDateString}</label>
                 <h3>Step 2: Input your Travel Details</h3>
             <div>
                 <div>
@@ -176,11 +162,10 @@ export default function EmpStep2(){
                     </input>
                 </div>
             </div>
-           
-
-                <button onClick={()=>navigate(-1)}>Back</button>
-                <button onClick={handleNextButtonClick}>Next</button>
+                <button onClick={() => navigate(-1)}>Back</button>
+                <button onClick={nextButton}>Next</button>
             </div>
         </div>
     );
 }
+export default EmpStep2;
