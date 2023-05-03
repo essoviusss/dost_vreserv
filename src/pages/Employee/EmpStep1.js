@@ -4,16 +4,20 @@ import axios from "axios";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDateTimePicker } from '@mui/x-date-pickers/StaticDateTimePicker';
+import { useFormData } from "./FormDataContext";
 
-export default function EmpStep1(){
+function EmpStep1(){
+    const { formData, updateFormData } = useFormData();
+
     const navigate = useNavigate();
     const [vehicles, setVehicles] = useState([]);
     const [drivers, setDrivers] = useState([]);
-    const [departureDate, setDepartureDate] = useState(new Date().toISOString());
-    const [arrivalDate, setArrivalDate] = useState(new Date().toISOString());
-    const [selectedVehicle, setSelectedVehicle] = useState("");
-    const [selectedDriver, setSelectedDriver] = useState("");
 
+    //formdata
+    const [departureDate, setDepartureDate] = useState(formData.departureDate || new Date().toISOString());
+    const [arrivalDate, setArrivalDate] = useState(formData.arrivalDate || new Date().toISOString());
+    const [selectedVehicle, setSelectedVehicle] = useState(formData.selectedVehicle || "");
+    const [selectedDriver, setSelectedDriver] = useState(formData.selectedDriver || "");
     useEffect(() => {
       axios.get('http://localhost/vreserv_api/available_vehicle.php')
         .then(response => {
@@ -22,7 +26,7 @@ export default function EmpStep1(){
         .catch(error => {
           console.log(error);
         });
-    }, [vehicles]);
+    }, []);
 
     useEffect(() => {
       axios.get('http://localhost/vreserv_api/available_driver.php')
@@ -32,17 +36,15 @@ export default function EmpStep1(){
         .catch(error => {
           console.log(error);
         });
-    }, [drivers]);
+    }, []);
 
-    const handleNextButtonClick = () => {
-      navigate("/EmpStep2", {
-          state: {
-              selectedVehicle,
-              selectedDriver,
-              departureDate,
-              arrivalDate
-            }
-        });
+    const nextButton = () => {
+      updateFormData("departureDate", departureDate);
+      updateFormData("arrivalDate", arrivalDate);
+      updateFormData("selectedVehicle", selectedVehicle);
+      updateFormData("selectedDriver", selectedDriver);
+      navigate("/EmpStep2")
+      // ...
     };
 
     return(
@@ -99,9 +101,10 @@ export default function EmpStep1(){
                 </div>
 
                 <div>
-                    <button onClick={handleNextButtonClick}>Next</button>
+                    <button onClick={nextButton}>Next</button>
                 </div>
             </div>
         </div>
     );
 }
+export default EmpStep1;
