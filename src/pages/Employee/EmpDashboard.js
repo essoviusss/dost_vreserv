@@ -43,16 +43,16 @@ const rows = [
 export default function EmpDashboard(){
     return(
         <div>
-            <EmpHome />
+
             <center><h1>Dashboard</h1></center>
             <div className="main-content">
               <div>
-              <div style={{ height: 400, width: "100%", backgroundColor: "white", borderRadius: "5" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        paginationModel={{ page: 0, pageSize: 5}}
-      />
+              <div style={{ height: 400, width: "80%", backgroundColor: "white", borderRadius: "5" }}>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              paginationModel={{ page: 0, pageSize: 5}}
+            />
     </div>
               </div>
            
