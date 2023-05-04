@@ -1,4 +1,3 @@
-import './App.css';
 import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
@@ -33,7 +32,7 @@ function MainContent() {
       <div className="sidebar">
         <Sidebar />
       </div>
-      <div className="main-content" style={{ flex: 1 }}>
+      <div className="main-content" style={{ flex: 1, marginLeft: 0 }}>
         <Routes>
           <Route path="/EmpHome" element={<RoleGuard requiredRole="Employee" />}>
             <Route index element={<EmpHome />} />
