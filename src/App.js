@@ -1,6 +1,6 @@
 import './App.css';
 import * as React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 import Login from './pages/Auth/Login';
 import EmpHome from './pages/Employee/EmpHome';
@@ -19,20 +19,28 @@ import DrvTravels from './pages/Driver/DrvTravels';
 import EmpEditStep1 from './pages/Employee/EmpEditStep1';
 import EmpEditStep2 from './pages/Employee/EmpEditStep2';
 import { FormDataProvider } from './pages/Employee/FormDataContext';
+import Sidebar from './Sidebar/Sidebar';
 
-function App() {
+function MainContent() {
+  const location = useLocation();
+
+  if (location.pathname === '/') {
+    return <Login />;
+  }
+
   return (
-    <Router>
-      <FormDataProvider>
+    <div className="App" style={{ display: 'flex' }}>
+      <div className="sidebar">
+        <Sidebar />
+      </div>
+      <div className="main-content" style={{ flex: 1 }}>
         <Routes>
-            <Route path="/" element={<Login />} />
-
-            <Route path="/EmpHome" element={<RoleGuard requiredRole="Employee" />}>
-              <Route index element={<EmpHome />} />
-            </Route>
-            <Route path="/DriverHome" element={<RoleGuard requiredRole="Driver" />}>
-              <Route index element={<DriverHome />} />
-            </Route>
+          <Route path="/EmpHome" element={<RoleGuard requiredRole="Employee" />}>
+            <Route index element={<EmpHome />} />
+          </Route>
+          <Route path="/DriverHome" element={<RoleGuard requiredRole="Driver" />}>
+            <Route index element={<DriverHome />} />
+          </Route>
 
           <Route path="/EmpDashboard" element={<EmpDashboard />} />
           <Route path="/EmpTravelRequest" element={<EmpTravelRequest />} />
@@ -47,9 +55,18 @@ function App() {
           <Route path="/DrvDashboard" element={<DrvDashboard />} />
           <Route path="/DrvTravels" element={<DrvTravels />} />
         </Routes>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <FormDataProvider>
+        <MainContent />
       </FormDataProvider>
     </Router>
-    
   );
 }
 

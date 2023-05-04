@@ -35,9 +35,6 @@ function EmpStep3() {
             alert(error);
         });
       }
-
-    
-
     return (
       <div>
         <div>

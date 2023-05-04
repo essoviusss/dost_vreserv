@@ -1,11 +1,8 @@
 import React from "react";
-import {useNavigate } from "react-router-dom";
+
 import EmpHome from "./EmpHome";
 
 export default function EmpSummary(){
-
-    const navigate = useNavigate();
-
     return(
         <div>
             <EmpHome />

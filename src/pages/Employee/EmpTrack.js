@@ -1,5 +1,4 @@
 import React from "react";
-import {useNavigate } from "react-router-dom";
 import EmpHome from "./EmpHome";
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -12,8 +11,6 @@ import '../Employee/components/EmpTrack.css'
 
 
 export default function EmpTrack(){
-
-    const navigate = useNavigate();
 
     return(
         <div>

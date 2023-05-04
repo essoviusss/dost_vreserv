@@ -18,25 +18,36 @@ function EmpStep1(){
     const [arrivalDate, setArrivalDate] = useState(formData.arrivalDate || new Date().toISOString());
     const [selectedVehicle, setSelectedVehicle] = useState(formData.selectedVehicle || "");
     const [selectedDriver, setSelectedDriver] = useState(formData.selectedDriver || "");
+    
     useEffect(() => {
       axios.get('http://localhost/vreserv_api/available_vehicle.php')
         .then(response => {
-          setVehicles(response.data);
+          if (Array.isArray(response.data)) {
+            setVehicles(response.data);
+          } else {
+            console.error('Unexpected API response format:', response.data);
+          }
         })
         .catch(error => {
           console.log(error);
         });
     }, []);
+    
 
     useEffect(() => {
       axios.get('http://localhost/vreserv_api/available_driver.php')
         .then(response => {
-          setDrivers(response.data);
+          if (Array.isArray(response.data)) {
+            setDrivers(response.data);
+          } else {
+            console.error('Unexpected API response format:', response.data);
+          }
         })
         .catch(error => {
           console.log(error);
         });
     }, []);
+    
 
     const nextButton = () => {
       updateFormData("departureDate", departureDate);
