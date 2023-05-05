@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CDBSidebar,
   CDBSidebarContent,
@@ -10,32 +10,32 @@ import {
 import { NavLink } from 'react-router-dom';
 
 const Sidebar = () => {
+  const [showLogo, setShowLogo] = useState(true);
+
+  const toggleLogo = () => {
+    setShowLogo(!showLogo);
+  }
+
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
-      <CDBSidebar textColor="#fff" backgroundColor="black">
-        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
+      <CDBSidebar textColor="#025BAD" backgroundColor="white" style={{ boxShadow: "2px 0px 5px 0px rgba(50, 50, 50, 0.5)" }}>
+        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>} onClick={toggleLogo}>
+          {showLogo && <img src="/images/blue_logo.png" alt="logo" style={{ height: '30px', marginRight: '10px' }} />}
           <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-            Sidebar
+            {showLogo ? 'Sidebar' : ''}
           </a>
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
+            <NavLink exact to="/EmpDashboard" activeClassName="activeClicked">
+              <CDBSidebarMenuItem icon="columns" iconClassName="text-primary" style={{ color: '#025BAD' }}>Dashboard</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/tables" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="table">Tables</CDBSidebarMenuItem>
+            <NavLink exact to="/EmpVehicleRequest" activeClassName="activeClicked">
+              <CDBSidebarMenuItem icon="table" iconClassName="text-primary" style={{ color: '#025BAD' }}>Vehicle Request</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/profile" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="user">Profile page</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/analytics" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="chart-line">Analytics</CDBSidebarMenuItem>
-            </NavLink>
-
-            <NavLink exact to="/hero404" target="_blank" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="exclamation-circle">404 page</CDBSidebarMenuItem>
+            <NavLink exact to="/EmpRequestLogs" activeClassName="activeClicked">
+              <CDBSidebarMenuItem icon="user" iconClassName="text-primary" style={{ color: '#025BAD' }}>Request Logs</CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
