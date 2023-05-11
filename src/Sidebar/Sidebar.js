@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CDBSidebar,
   CDBSidebarContent,
@@ -7,51 +7,98 @@ import {
   CDBSidebarMenu,
   CDBSidebarMenuItem,
 } from 'cdbreact';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const Sidebar = () => {
+  const [showLogo, setShowLogo] = useState(true);
+  const [isToggled, setIsToggled] = useState(false);
+  const location = useLocation();
+
+  const handleToggle = () => {
+    setIsToggled(!isToggled);
+  };
+
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
-      <CDBSidebar textColor="#fff" backgroundColor="black">
-        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-            Sidebar
-          </a>
+    <div style={{
+      display: 'flex',
+      height: '100%',
+      transition: 'margin-right 0.5s ease',
+      marginRight: isToggled ? '80px' : '270px',
+      backgroundColor: '#F4F7FE',
+      overflow: 'hidden'
+    }}>
+      <CDBSidebar 
+        textColor="#025BAD"
+        backgroundColor="white"
+        style={{ 
+          boxShadow: "2px 0px 5px 0px rgba(50, 50, 50, 0.2)", 
+          position: 'fixed'
+        }}>
+        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large" onClick={handleToggle} />}>
+          {showLogo && (
+            <img
+              src="/images/blue_logo.png"
+              alt="logo"
+              style={{ height: '35px', marginRight: '8px' }}
+            />
+          )}
+          <span className="text-decoration-none" style={{ color: 'inherit', fontSize: '120%' }}>
+            {showLogo ? 'VRESERV' : ''}
+          </span>
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
+            <NavLink exact to="/EmpDashboard" activeClassName="activeClicked">
+              <CDBSidebarMenuItem style={location.pathname === '/EmpDashboard' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/EmpDashboard' ? 'text-primary' : 'text-gray'} icon="columns" iconClassName={`fa-columns ${location.pathname === '/EmpDashboard' ? 'active-icon' : ''}`}><span>Dashboard</span></CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/tables" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="table">Tables</CDBSidebarMenuItem>
+            <NavLink exact to="/EmpVehicleRequest" activeClassName="activeClicked">
+              <CDBSidebarMenuItem style={(location.pathname === '/EmpVehicleRequest' || location.pathname === '/EmpStep2' || location.pathname === '/EmpStep3') ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={(location.pathname === '/EmpVehicleRequest' || location.pathname === '/EmpStep2' || location.pathname === '/EmpStep3') ? 'text-primary' : 'text-gray'} icon="table" iconClassName={`fa-table ${(location.pathname === '/EmpVehicleRequest' || location.pathname === '/EmpStep2' || location.pathname === '/EmpStep3') ? 'active-icon' : ''}`}>Vehicle Request</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/profile" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="user">Profile page</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/analytics" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="chart-line">Analytics</CDBSidebarMenuItem>
-            </NavLink>
-
-            <NavLink exact to="/hero404" target="_blank" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="exclamation-circle">404 page</CDBSidebarMenuItem>
+            <NavLink exact to="/EmpRequestLogs" activeClassName="activeClicked">
+              <CDBSidebarMenuItem style={location.pathname === '/EmpRequestLogs' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/EmpRequestLogs' ? 'text-primary' : 'text-gray'} icon="user" iconClassName={`fa-user ${location.pathname === '/EmpRequestLogs' ? 'active-icon' : ''}`}>Request Logs</CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
         <CDBSidebarFooter style={{ textAlign: 'center' }}>
-          <div
+          {/* <div
             style={{
               padding: '20px 5px',
             }}
           >
             Sidebar Footer
-          </div>
+          </div> */}
         </CDBSidebarFooter>
       </CDBSidebar>
-    </div>
-  );
+      <style>
+{`
+  .sidebar-content .fa-columns, .sidebar-content .fa-table, .sidebar-content .fa-user { color: gray; }
+
+  .sidebar-content .activeClicked {
+    color: #025BAD !important;
+    background-color: red !important;
+    border-radius: 10px !important;
+  }
+
+  .sidebar-content .active-icon {
+    color: #025BAD !important;
+  }
+
+  .text-primary {
+    color: #025BAD !important;
+    font-weight: bold;
+  }
+
+  .text-gray {
+    color: gray !important;
+  }
+`}
+</style>
+
+
+</div>
+);
 };
 
 export default Sidebar;

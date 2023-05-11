@@ -1,5 +1,4 @@
 import React from "react";
-import EmpHome from "./EmpHome";
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -10,12 +9,11 @@ import Divider from '@mui/material/Divider';
 import '../Employee/components/EmpTrack.css'
 
 
-export default function EmpTrack(){
+export default function EmpRequestLogs(){
 
     return(
         <div>
-            <EmpHome />
-            <div className="">
+            <div>
 
                 <div style={{marginLeft: '30%', marginTop: '2%'}}>
                     <TextField

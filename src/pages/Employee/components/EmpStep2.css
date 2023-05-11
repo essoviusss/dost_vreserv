@@ -1,0 +1,254 @@
+.step2-text {
+  font-size: 20px;
+  color: #1a2458;
+  font-weight: bold;
+  margin-bottom: 2%;
+}
+
+.grid-container-step2 > div {
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-container-step2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* grid-template-rows: repeat(9, .5fr); */
+  grid-column-gap: 20px;
+  grid-row-gap: 10px;
+}
+
+.div1,
+.div2,
+.div5,
+.div7,
+.div9 {
+  grid-row: span 1;
+  height: 50px;
+  text-align: center;
+}
+
+.div1 {
+  grid-area: 1 / 1 / 2 / 2;
+  margin-bottom: 0.5%;
+}
+
+.div2 {
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+.div3 {
+  display: flex;
+  flex-direction: column;
+  grid-area: 2 / 1 / 6 / 2;
+  height: 400px;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+}
+
+.div3 > div {
+  width: 100%;
+}
+
+.dest-input {
+  height: 50px;
+  margin-top: -280px;
+}
+
+.dest-input input{
+  height: 50px;
+  margin-top: -280px;
+  padding: 10px;
+  border: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+.dest-input input:focus {
+  border: 2px solid #71baff;
+  outline: none;
+}
+
+.dest-maps{
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.div4 {
+  grid-area: 2 / 2 / 3 / 3;
+  height: 214px;
+  margin-bottom: 5%;
+}
+
+.div4 > textarea {
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+.div4 > textarea:focus {
+  border: 2px solid #71baff;
+  outline: none;
+}
+
+.div5 {
+  grid-area: 3 / 2 / 4 / 3;
+  margin-bottom: 0.5%;
+}
+
+.div6 {
+  grid-area: 4 / 2 / 5 / 3;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  justify-content: center;
+  text-align: center;
+}
+
+.div6 input {
+  width: 150%; /* or a fixed width value */
+  padding: 10px;
+  border: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+.div6 input:focus {
+  border: 2px solid #71baff;
+  outline: none;
+}
+
+.passname-input {
+  width: 50%;
+  height: 100px; /* Set a fixed height */
+  display: flex;
+  flex-direction: column;
+}
+
+.passname-input label {
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.passname-input input {
+  width: 90%;
+  padding: 10px;
+  border: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+.passname-input input:focus {
+  border: 2px solid #71baff;
+  outline: none;
+}
+
+.div7 {
+  grid-area: 6 / 1 / 7 / 3;
+}
+
+.div8 {
+  grid-area: 7 / 1 / 8 / 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+  align-items: flex-start; 
+}
+
+.passenger-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.div9 {
+  grid-area: 8 / 1 / 9 / 3;
+  margin-top: 2%;
+}
+
+.div10 {
+  grid-area: 9 / 1 / 10 / 3;
+  margin-bottom: 2%;
+}
+.div10 input {
+  width: 150%; /* or a fixed width value */
+  padding: 10px;
+  border: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+.div10 input:focus {
+  border: 2px solid #71baff;
+  outline: none;
+}
+
+.div11 {
+  grid-area: 10 / 1 / 11 / 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.back-button-container {
+  margin-right: auto;
+}
+
+.back-button {
+  background-color: #025BAD;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background-color: #013F7C;
+}
+
+.div12 {
+  grid-area: 10 / 2 / 11 / 3;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.next-button-step2 {
+  background-color: #025BAD;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.next-button:hover {
+  background-color: #013F7C;
+}
+
+.next-button-container-step2 {
+  margin-left: auto;
+}

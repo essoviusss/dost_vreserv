@@ -6,12 +6,20 @@ import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../Employee/components/EmpStep3.css';
+import Header from "../../header/header";
+import '../GlobalCSS/content.css';
+import '../Employee/EmpStep4.js';
 
 function EmpStep3() {
     const { formData } = useFormData();
     const navigate = useNavigate();
     const UID = uuidv4();
     const notif = () => toast("Request Submitted!");
+
+    const nextButton = () => {
+      navigate("/EmpStep4");
+    };
 
     function submitForm() {
         const url = 'http://localhost/vreserv_api/submit_request.php';
@@ -36,55 +44,148 @@ function EmpStep3() {
         });
       }
     return (
-      <div>
-        <div>
-          <ToastContainer />
-        </div>
-        <h3>Step 3: Summary</h3>
-        <div>
-          <h4>Departure Date and Time:</h4>
-          <p>{dayjs(formData.departureDate).format("MMMM D, YYYY, h:mm A")}</p>
-        </div>
-        <div>
-          <h4>Arrival Date and Time:</h4>
-          <p>{dayjs(formData.arrivalDate).format("MMMM D, YYYY, h:mm A")}</p>
-        </div>
-        <div>
-          <h4>Selected Vehicle:</h4>
-          <p>{formData.selectedVehicle}</p>
-        </div>
-        <div>
-          <h4>Selected Driver:</h4>
-          <p>{formData.selectedDriver}</p>
-        </div>
-        <div>
-          <h4>Destination:</h4>
-          <p>{formData.address}</p>
-        </div>
-        <div>
-          <h4>Purpose:</h4>
-          <p>{formData.purpose}</p>
-        </div>
-        <div>
-          <h4>Number of Passengers:</h4>
-          <p>{formData.numPassengers}</p>
-        </div>
-        <div>
-          <h4>Passenger Names:</h4>
-            <ul>
-            {formData.passengerNames &&
-                formData.passengerNames.map((name, index) => (
-                <li key={index}>{name}</li>
-                ))}
-            </ul>
-        </div>
-        <div>
-          <h4>Requested By:</h4>
-          <p>{formData.requestedBy}</p>
-        </div>
-        <button onClick={() => navigate(-1)}>Back</button>
-        <button onClick={submitForm}>Submit</button>
+      <div style={{ paddingTop: '60px' }}>
+      <div className="main-content">
+        <Header />
+        <div className="step3-text">Step 3: Review the inputted details</div>
+        <div className="grid-container-step3">
+          <div className="div1-step3">
+            <div className="div-summary">
+              <div className="div1-container">
+                <div className="div1-summary">
+                  <img className="summary-logo" src="/images/summary_logo.png"/>
+                </div>
+              </div>
+              <div className="div2-summary">
+                <p className="header-summary">{formData.selectedVehicle}A1M 904 Hilux</p>
+                <p className="header-label-summary">Vehicle to be requested</p>
+              </div>
+              <div className="div3-summary">
+                <p className="header-summary">{formData.selectedDriver}David H. Lim III</p>
+                <p className="header-label-summary">Name of the driver</p>
+              </div>
+              <div className="div4-summary">
+                <div class="edit-button-container">
+                  <button className="edit-button" onClick={() => navigate(-1)}>Edit</button>
+                </div>
+              </div>
+              <div className="div5-summary">
+                <hr class="summary-hr"/>
+              </div>
+              <div className="div6-summary">
+                <p className="schedlabel-summary">SCHEDULE OF TRAVEL</p>
+              </div>
+              <div className="div7-summary">
+                <div className="div7table-container">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td className="table-label-summary">
+                        <p className="header-label-summary">Departure Date and Time:</p>
+                      </td>
+                      <td>
+                        <p className="summary-details">
+                          {dayjs(formData.departureDate).format("MMMM D, YYYY, h:mm A")}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="table-label-summary">
+                        <p className="header-label-summary">Arrival Date and Time:</p>
+                      </td>
+                      <td>
+                      <p className="summary-details">
+                        {dayjs(formData.arrivalDate).format("MMMM D, YYYY, h:mm A")}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="table-label-summary">
+                        <p className="header-label-summary">Destination:</p>
+                      </td>
+                      <td>
+                      <p className="summary-details">
+                        {formData.address}dfsfsefefssfsfdssasdadsdsadadassdsds</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+              <div className="div9-summary">
+                <p className="schedlabel-summary">OTHER DETAILS</p>
+              </div>
+              <div className="div10-summary">
+              <div className="div10table-container">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td className="table-label-summary">
+                        <p className="header-label-summary">Total No. of Passenger/s:</p>
+                      </td>
+                      <td>
+                        <p className="summary-details">
+                          {formData.numPassengers}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="table-label-summary">
+                        <p className="header-label-summary">Name of Passenger/s:</p>
+                      </td>
+                      <td>
+                      <p className="summary-details">
+                        <ul>
+                        {formData.passengerNames &&
+                            formData.passengerNames.map((name, index) => (
+                            <li key={index}>{name}</li>
+                            ))}
+                        </ul>
+                      </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="table-label-summary">
+                        <p className="header-label-summary">Purpose:</p>
+                      </td>
+                      <td>
+                      <p className="summary-details">
+                        {formData.address}dfsfsefefssfsfdssasdadsdsadadassdsds</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="table-label-summary">
+                        <p className="header-label-summary">Requested By:</p>
+                      </td>
+                      <td>
+                      <p className="summary-details">
+                        {formData.address}dfsfsefefssfsfdssasdadsdsadadassdsds</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="div2-step3">
+            <p className="note-summary">
+              Please review the details you entered and click "Continue" if you wish to proceed with your request
+            </p>
+          </div>
+          <div className="div3-step3">
+            <div class="back-button-container">
+              <button className="back-button" onClick={() => navigate(-1)}>Back</button>
+            </div>
+          </div>
+          <div className="div4-step3">
+            <div class="submit-button-container">
+              <button className="submit-button" onClick={submitForm}>Submit</button>
+            </div>
+            <div class="submit-button-container">
+              <button className="submit-button" onClick={nextButton}>Next</button>
+            </div>
+          </div>
+          </div>
       </div>
+    </div>
     );
   }
 
