@@ -13,7 +13,7 @@ export default function EmpRequestLogs(){
 
     return(
         <div>
-            <div className="">
+            <div>
 
                 <div style={{marginLeft: '30%', marginTop: '2%'}}>
                     <TextField

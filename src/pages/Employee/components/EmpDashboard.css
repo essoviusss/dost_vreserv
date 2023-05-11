@@ -1,3 +1,4 @@
+
 .item1 { grid-area: item1; }
 .item2 { grid-area: item2; }
 .item3 { grid-area: item3; }
@@ -6,7 +7,7 @@
 .item6 { grid-area: item6; }
 
 .main-cont{
-    background-color: white;
+    background-color: #F4F7FE;
 }
 
 .grid-container {
@@ -17,16 +18,19 @@
         'item1 item1 item1 item1 item2 item2 item4 item4'
         'item1 item1 item1 item1 item3 item3 item4 item4'
         'item5 item5 item5 item5 item5 item5 item6 item6';
-    grid-template-rows: 2fr 2fr 12fr;
-    gap: 1.5%;
-    padding: 10px;
+    grid-template-rows: 2fr 2fr 10.90fr;
+    gap: 3%;
+    padding: 0px;
+    overflow: auto; 
 }
 
 .grid-container > div {
-  background-color: #bbc9f9;
-  text-align: center;
-  padding: 20px 0;
-  font-size: 30px;
-  border-radius: 10px;
-}
+    background-color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 30px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 
+  }
+  
