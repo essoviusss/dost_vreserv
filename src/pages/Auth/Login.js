@@ -107,7 +107,7 @@ export default function Login(){
         if (userRole === "Employee") {
             navigate("/EmpDashboard", { replace: true });
         } else if (userRole === "Driver") {
-            navigate("/DriverHome", { replace: true });
+            navigate("/DrvDashboard", { replace: true });
         }
       }
     }, [navigate]);
@@ -149,7 +149,7 @@ export default function Login(){
             alert("Login Successful");
             localStorage.setItem("token", jwtToken);
             localStorage.setItem("userRole", userRole); // Add this line
-            navigate("/DriverHome", { replace: true });
+            navigate("/DrvDashboard", { replace: true });
         } else {
             alert("User does not exist");
         }
