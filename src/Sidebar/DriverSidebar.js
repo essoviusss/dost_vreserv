@@ -50,8 +50,9 @@ const DriverSidebar = () => {
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
             <NavLink exact to="/DrvDashboard" activeClassName="activeClicked">
-              <CDBSidebarMenuItem style={location.pathname === '/DrvDashboard' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/EmpDashboard' ? 'text-primary' : 'text-gray'} icon="columns" iconClassName={`fa-columns ${location.pathname === '/EmpDashboard' ? 'active-icon' : ''}`}><span>Driver Dashboard</span></CDBSidebarMenuItem>
+              <CDBSidebarMenuItem style={location.pathname === '/DrvDashboard' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/EmpDashboard' ? 'text-primary' : 'text-gray'} icon="columns" iconClassName={`fa-columns ${location.pathname === '/EmpDashboard' ? 'active-icon' : ''}`}><span>Dashboard</span></CDBSidebarMenuItem>
             </NavLink>
+           
           </CDBSidebarMenu>
         </CDBSidebarContent>
 

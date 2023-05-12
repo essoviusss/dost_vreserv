@@ -32,7 +32,7 @@ function MainContent() {
   return (
     <div className="App" style={{ display: 'flex' }}>
       <div className="sidebar">
-        {userRole === "Employee" ? <Sidebar /> : userRole === "Driver" ? <DriverSidebar /> : null}  // Render Sidebar based on userRole
+        {userRole === "Employee" ? <Sidebar /> : userRole === "Driver" ? <DriverSidebar /> : null} 
       </div>
       <div className="main-content" style={{ flex: 1, marginLeft: 0 }}>
         <Routes>
