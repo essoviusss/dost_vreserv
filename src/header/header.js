@@ -1,9 +1,29 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth'; 
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const isLoggedIn = useAuth(); 
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!isLoggedIn && token === null) {
+          navigate('/');
+        }
+    }, [isLoggedIn, navigate]);
+
+      const logout = () => {
+        localStorage.removeItem("token");
+        alert("You have been logged out!");
+        navigate("/", { replace: true });
+      };
 
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -67,7 +87,7 @@ const Header = () => {
             <div style={{ cursor: 'pointer' }} onClick={() => console.log('Profile clicked')}>
               Profile
             </div>
-            <div style={{ cursor: 'pointer' }} onClick={() => console.log('Logout clicked')}>
+            <div style={{ cursor: 'pointer' }} onClick={logout}>
               Logout
             </div>
           </div>

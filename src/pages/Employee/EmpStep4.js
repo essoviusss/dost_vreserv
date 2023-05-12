@@ -1,35 +1,21 @@
 import {useNavigate } from "react-router-dom";
-import EmpHome from "./EmpHome";
+import Header from "../../header/header";
+import '../Employee/components/EmpStep4.css';
 
 export default function EmpStep4(){
 
     const navigate = useNavigate();
 
     return(
-        <div>
-            <EmpHome />
+        <div style={{ paddingTop: '60px' }}>
             <div className="main-content">
-                <div>
-                    <h3>Step 4: Copy the Request ID to track status</h3>
+                <Header />
+                <div className="grid-container-step4">
+                    <div className="div1-step4">1</div>
+                    <div className="div2-step4">2</div>
+                    <div className="div3-step4">3</div>
+                    <div className="div4-step4">4</div>
                 </div>
-
-                <div>
-                    <img></img>
-                </div>
-
-                <div>
-                    <label>Requested ID: #123456</label>
-                </div>
-
-                <div>
-                    Your request have been submitted, please wait for the recommendation.
-                </div>
-                
-
-                
-
-                <button onClick={()=>navigate(-1)}>Back</button>
-                {/* <button onClick={()=>navigate("/EmpStep3")}>Continue</button> */}
             </div>
         </div>
     );

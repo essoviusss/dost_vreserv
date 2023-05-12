@@ -37,7 +37,7 @@ function EmpStep3() {
 
         axios.post(url, fData)
           .then(response => {
-            response.data.trim() === "Success" ? notif() : alert(response.data);
+            response.data.trim() === "Success" ? navigate("/EmpStep4") : alert(response.data);
           })
           .catch(error => {
             alert(error);
@@ -57,11 +57,11 @@ function EmpStep3() {
                 </div>
               </div>
               <div className="div2-summary">
-                <p className="header-summary">{formData.selectedVehicle}A1M 904 Hilux</p>
+                <p className="header-summary">{formData.selectedVehicle}</p>
                 <p className="header-label-summary">Vehicle to be requested</p>
               </div>
               <div className="div3-summary">
-                <p className="header-summary">{formData.selectedDriver}David H. Lim III</p>
+                <p className="header-summary">{formData.selectedDriver}</p>
                 <p className="header-label-summary">Name of the driver</p>
               </div>
               <div className="div4-summary">
@@ -103,7 +103,7 @@ function EmpStep3() {
                       </td>
                       <td>
                       <p className="summary-details">
-                        {formData.address}dfsfsefefssfsfdssasdadsdsadadassdsds</p>
+                        {formData.address}</p>
                       </td>
                     </tr>
                   </tbody>
@@ -147,7 +147,7 @@ function EmpStep3() {
                       </td>
                       <td>
                       <p className="summary-details">
-                        {formData.address}dfsfsefefssfsfdssasdadsdsadadassdsds</p>
+                        {formData.address}</p>
                       </td>
                     </tr>
                     <tr>
@@ -156,7 +156,7 @@ function EmpStep3() {
                       </td>
                       <td>
                       <p className="summary-details">
-                        {formData.address}dfsfsefefssfsfdssasdadsdsadadassdsds</p>
+                        {formData.address}</p>
                       </td>
                     </tr>
                   </tbody>
