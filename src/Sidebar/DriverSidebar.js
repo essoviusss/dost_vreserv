@@ -9,7 +9,7 @@ import {
 } from 'cdbreact';
 import { NavLink, useLocation } from 'react-router-dom';
 
-const Sidebar = () => {
+const DriverSidebar = () => {
   const [showLogo, setShowLogo] = useState(true);
   const [isToggled, setIsToggled] = useState(false);
   const location = useLocation();
@@ -49,15 +49,10 @@ const Sidebar = () => {
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/EmpDashboard" activeClassName="activeClicked">
-              <CDBSidebarMenuItem style={location.pathname === '/EmpDashboard' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/EmpDashboard' ? 'text-primary' : 'text-gray'} icon="columns" iconClassName={`fa-columns ${location.pathname === '/EmpDashboard' ? 'active-icon' : ''}`}><span>Dashboard</span></CDBSidebarMenuItem>
+            <NavLink exact to="/DrvDashboard" activeClassName="activeClicked">
+              <CDBSidebarMenuItem style={location.pathname === '/DrvDashboard' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/EmpDashboard' ? 'text-primary' : 'text-gray'} icon="columns" iconClassName={`fa-columns ${location.pathname === '/EmpDashboard' ? 'active-icon' : ''}`}><span>Dashboard</span></CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/EmpVehicleRequest" activeClassName="activeClicked">
-              <CDBSidebarMenuItem style={(location.pathname === '/EmpVehicleRequest' || location.pathname === '/EmpStep2' || location.pathname === '/EmpStep3' || location.pathname === '/EmpStep4') ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={(location.pathname === '/EmpVehicleRequest' || location.pathname === '/EmpStep2' || location.pathname === '/EmpStep3' || location.pathname === '/EmpStep4') ? 'text-primary' : 'text-gray'} icon="table" iconClassName={`fa-table ${(location.pathname === '/EmpVehicleRequest' || location.pathname === '/EmpStep2' || location.pathname === '/EmpStep3' || location.pathname === '/EmpStep4') ? 'active-icon' : ''}`}>Vehicle Request</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/EmpRequestLogs" activeClassName="activeClicked">
-              <CDBSidebarMenuItem style={location.pathname === '/EmpRequestLogs' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/EmpRequestLogs' ? 'text-primary' : 'text-gray'} icon="user" iconClassName={`fa-user ${location.pathname === '/EmpRequestLogs' ? 'active-icon' : ''}`}>Request Logs</CDBSidebarMenuItem>
-            </NavLink>
+           
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
@@ -101,4 +96,4 @@ const Sidebar = () => {
 );
 };
 
-export default Sidebar;
+export default DriverSidebar;

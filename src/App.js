@@ -19,9 +19,11 @@ import EmpEditStep1 from './pages/Employee/EmpEditStep1';
 import EmpEditStep2 from './pages/Employee/EmpEditStep2';
 import { FormDataProvider } from './pages/Employee/FormDataContext';
 import Sidebar from './Sidebar/Sidebar';
+import DriverSidebar from './Sidebar/DriverSidebar';
 
 function MainContent() {
   const location = useLocation();
+  const userRole = localStorage.getItem('userRole');
 
   if (location.pathname === '/') {
     return <Login />;
@@ -30,7 +32,7 @@ function MainContent() {
   return (
     <div className="App" style={{ display: 'flex' }}>
       <div className="sidebar">
-        <Sidebar />
+        {userRole === "Employee" ? <Sidebar /> : userRole === "Driver" ? <DriverSidebar /> : null} 
       </div>
       <div className="main-content" style={{ flex: 1, marginLeft: 0 }}>
         <Routes>

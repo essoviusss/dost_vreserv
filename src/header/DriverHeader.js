@@ -7,7 +7,7 @@ import useAuth from '../hooks/useAuth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-const Header = () => {
+const DriverHeader = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const isLoggedIn = useAuth(); 
@@ -97,4 +97,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default DriverHeader;
