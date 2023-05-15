@@ -25,7 +25,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
 export default function Login(){
-  const [username, setUsername] = useState("");
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const navigate = useNavigate();
@@ -66,15 +66,15 @@ export default function Login(){
     setSelectBgColor('#f9f9f9');
   };
   
-  //Username Textfield
-  const [usernameBgColor, setUsernameBgColor] = useState('#f9f9f9');
+  //email Textfield
+  const [emailBgColor, setemailBgColor] = useState('#f9f9f9');
   const handleFocus = () => {
     setIsFocused(true);
-    setUsernameBgColor('#fff');
+    setemailBgColor('#fff');
   };
   const handleBlur = () => {
     setIsFocused(false);
-    setUsernameBgColor('#f9f9f9');
+    setemailBgColor('#f9f9f9');
   };
 
   //Password Textfield
@@ -121,7 +121,7 @@ export default function Login(){
         }
 
         let fData = new FormData();
-        fData.append("username", username);
+        fData.append("email", email);
         fData.append("password", password);
       
         try {
@@ -135,20 +135,20 @@ export default function Login(){
             return;
           }
       
-          // Save the JWT token in the local storage
           const jwtToken = await response.data.token;
           const userRole = await response.data.role.trim();
-          
       
           if (userRole === "Employee" && role === "Employee") {
             alert("Login Successful");
             localStorage.setItem("token", jwtToken);
-            localStorage.setItem("userRole", userRole); // Add this line
+            localStorage.setItem("userRole", userRole);
+            localStorage.setItem("email", email);
             navigate("/EmpDashboard", { replace: true });
         } else if (userRole === "Driver" && role === "Driver") {
             alert("Login Successful");
             localStorage.setItem("token", jwtToken);
-            localStorage.setItem("userRole", userRole); // Add this line
+            localStorage.setItem("userRole", userRole);
+            localStorage.setItem("email", email); 
             navigate("/DrvDashboard", { replace: true });
         } else {
             alert("User does not exist");
@@ -231,14 +231,14 @@ export default function Login(){
             <div className="login-field">
               <FormControl variant="outlined" style={{ width: '100%'}}>
                 <TextField
-                  id="username"
-                  onChange={e => setUsername(e.target.value)}
-                  label="Username"
+                  id="email"
+                  onChange={e => setemail(e.target.value)}
+                  label="email"
                   variant="outlined"
                   onFocus={handleFocus}
                   onBlur={handleBlur}
                   InputProps={{
-                    style: { backgroundColor: usernameBgColor },
+                    style: { backgroundColor: emailBgColor },
                     endAdornment: (
                       <InputAdornment position="end">
                         <AlternateEmailIcon color={isFocused ? 'primary' : 'action'} />
