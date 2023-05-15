@@ -33,6 +33,7 @@
     "react-datepicker": "^4.11.0",
     "react-daterangepicker": "^0.1.2",
     "react-dom": "^18.2.0",
+    "react-places-autocomplete": "^7.3.0",
     "react-responsive-carousel": "^3.2.23",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.2",

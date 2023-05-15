@@ -17,10 +17,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 export default function EmpRequestLogs(){
   //defaultValue
-  const [selectedRequest, setSelectedRequest] = useState({
-  passenger_name: [],
-  // other properties...
-});
+  const [selectedRequest, setSelectedRequest] = useState({});
   const [request, setRequest] = useState([]);
 
   //modal
