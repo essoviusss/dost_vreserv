@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
-import { useLocation } from "react-router-dom";
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import axios from 'axios';
 import { useFormData } from "./FormDataContext";
@@ -24,10 +23,10 @@ const API_KEY = 'AIzaSyAfwnnpqgJEIWC8xyJWHJJzc5t-JndFKjg';
 function EmpStep2() {
   const { formData, updateFormData } = useFormData();
   const navigate = useNavigate();
-  const location = useLocation();
 
   // Value from Step 1
   const [loc, setLoc] = useState(defaultCenter);
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
 
   // FormData
   const [address, setAddress] = useState(formData.address || '');
@@ -70,6 +69,14 @@ function EmpStep2() {
     }
   };
 
+  const handleMapLoad = () => {
+    setIsMapLoaded(true);
+  };
+
+  const handleMapUnmount = () => {
+    setIsMapLoaded(false);
+  };
+
   const pinIconURL = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
 
   const nextButton = () => {
@@ -80,6 +87,8 @@ function EmpStep2() {
     updateFormData("requestedBy", requestedBy);
     navigate("/EmpStep3");
   };
+
+  
   
   return (
     <div style={{ paddingTop: '60px' }}>
@@ -91,44 +100,43 @@ function EmpStep2() {
           <div className="div2">PURPOSE</div>
           <div className="div3">
             <div className="dest-input">
-              <input
-                type="text"
-                value={address}
-                readOnly
-                style={{ width: '100%', marginTop: '10px' }}
-              />
+            <input
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              style={{ width: '100%', marginTop: '10px' }}
+            />
             </div>
             <div className="dest-maps">
               <label></label>
-              <LoadScript googleMapsApiKey='AIzaSyAfwnnpqgJEIWC8xyJWHJJzc5t-JndFKjg'>
+              <LoadScript googleMapsApiKey={API_KEY}>
                 <GoogleMap
                   mapContainerStyle={{ width: '100%', height: '1200%', borderRadius: '5px'}}
                   center={defaultCenter}
                   zoom={10}
                   onClick={handleMapClick}
+                  onLoad={handleMapLoad}
+                  onUnmount={handleMapUnmount}
                 >
-                  {location && (
-                    <Marker position={loc} icon={pinIconURL} />
-                  )}
+                  {isMapLoaded && <Marker key={`${loc.lat}-${loc.lng}`} position={loc} icon={pinIconURL} />}
                 </GoogleMap>
               </LoadScript>
             </div>
           </div>
           <div className="div4">
             <textarea 
-                placeholder="Input the purpose here"
-                value={purpose}
-                onChange={(e) => setPurpose(e.target.value)}
-            >
-            </textarea>
+              placeholder="Input the purpose here"
+              value={purpose}
+              onChange={(e) => setPurpose(e.target.value)}
+            />
           </div>
           <div className="div5">NUMBER OF PASSENGER/S</div>
           <div className="div6">
-              <input
-                type="number"
-                value={numPassengers}
-                onChange={handleNumPassengersChange}
-              />
+            <input
+              type="number"
+              value={numPassengers}
+              onChange={handleNumPassengersChange}
+            />
           </div>
           <div className="div7">NAME OF PASSENGER/S</div>
           <div className="div8">
@@ -151,16 +159,15 @@ function EmpStep2() {
               placeholder="Input requestor's name"
               value={requestedBy} 
               onChange={(e) => setRequestedBy(e.target.value)}
-              >
-            </input>
+            />
           </div>
           <div className="div11">
-            <div class="back-button-container">
-            <button className="back-button" onClick={() => navigate(-1)}>Back</button>
+            <div className="back-button-container">
+              <button className="back-button" onClick={() => navigate(-1)}>Back</button>
             </div>
           </div>
           <div className="div12">
-            <div class="next-button-container-step2">
+            <div className="next-button-container-step2">
               <button onClick={nextButton} className="next-button-step2">Next</button>
             </div>
           </div>
@@ -170,3 +177,4 @@ function EmpStep2() {
   );
 }
 export default EmpStep2;
+

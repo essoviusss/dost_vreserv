@@ -14,9 +14,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 
 export default function EmpRequestLogs(){
   //defaultValue
@@ -35,13 +32,13 @@ export default function EmpRequestLogs(){
   const CloseView = () => {
     setOpenView(false);
   };
-  
 
-  
+  const email = localStorage.getItem("email");
+
   //read
   useEffect(() => {
     axios
-      .get("http://localhost/vreserv_admin_api/read_request.php")
+      .get("http://localhost/vreserv_api/read_request.php")
       .then((response) => {
         if(Array.isArray(response.data)){
           setRequest(response.data);
@@ -52,36 +49,44 @@ export default function EmpRequestLogs(){
       });
   }, [request]);
 
-  
-
-
     return(
-        <div>
+        <div style={{paddingTop: '60px'}}>
             <Header/>
-           
+          <table>
+          <thead>
+            <tr>
 
-        <table>
-        <thead>
-          <tr>
-            <th>Destination</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {request.map((request) => (
-            <tr key={request.request_id}>
-              <td>{request.destination}</td>
-              <td>{request.request_status}</td>
-              <td>
-                  <Button variant="contained" onClick={() => handleOpenView(request)}>
-                    View
-                  </Button>  
-                </td>
+              <th>Vehicle</th>
+              <th>Driver</th>
+              <th>Destination</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {request.map((request) =>
+            {
+              if (request.request_email === email) {
+                return (
+                  <tr key={request.request_id}>
+                    <td>{request.vehicle_name}</td>
+                    <td>{request.driver_name}</td>
+                    <td>{request.destination}</td>
+                    <td>{request.request_status}</td>
+                    <td>
+                      <Button variant="contained" onClick={() => handleOpenView(request)}>
+                        View
+                      </Button>  
+                    </td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            }
+            )}
+          </tbody>
+        </table>
       {/* view modal*/}
       <Dialog open={openView} onClose={CloseView} fullWidth maxWidth="sm">
             <DialogTitle>View Details</DialogTitle>
@@ -158,7 +163,10 @@ export default function EmpRequestLogs(){
                                 <label>Total No. of Passenger/s : {selectedRequest.passenger_count}</label>
                             </div>
                             <div>
-                                <label>Name of Passenger/s: {selectedRequest.passenger_name}</label>
+                                <label>Name of Passenger/s: </label>
+                                {selectedRequest.passenger_names && Array.isArray(selectedRequest.passenger_names) && selectedRequest.passenger_names.map((passenger, index) => (
+                                  <div key={index}>{passenger}</div>
+                                ))}
                             </div>
                             <div>
                                 <label>Purpose: {selectedRequest.purpose}</label>
@@ -172,5 +180,6 @@ export default function EmpRequestLogs(){
                 </DialogActions>
             </Dialog>
         </div>
+        
     );
 }

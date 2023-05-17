@@ -22,9 +22,11 @@ function EmpStep3() {
     };
 
     function submitForm() {
+        const email = localStorage.getItem("email");
         const url = 'http://localhost/vreserv_api/submit_request.php';
         let fData = new FormData();
         fData.append('UID', UID);
+        fData.append('email', email);
         fData.append('departureDate', formData.departureDate);
         fData.append('arrivalDate', formData.arrivalDate);
         fData.append('selectedVehicle', formData.selectedVehicle);
@@ -147,7 +149,7 @@ function EmpStep3() {
                       </td>
                       <td>
                       <p className="summary-details">
-                        {formData.address}</p>
+                        {formData.purpose}</p>
                       </td>
                     </tr>
                     <tr>
@@ -156,7 +158,7 @@ function EmpStep3() {
                       </td>
                       <td>
                       <p className="summary-details">
-                        {formData.address}</p>
+                        {formData.requestedBy}</p>
                       </td>
                     </tr>
                   </tbody>

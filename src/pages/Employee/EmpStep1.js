@@ -59,6 +59,7 @@ function EmpStep1(){
       navigate("/EmpStep2")
       // ...
     };
+    
 
   return(
     <div style={{ paddingTop: '60px' }}>
@@ -71,6 +72,7 @@ function EmpStep1(){
           <div class="item3-step1">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <StaticDateTimePicker 
+                className="hidePickerButtons"
                 orientation="landscape"
                 onChange={(date) => setDepartureDate(date.toISOString())} 
               />
@@ -79,6 +81,7 @@ function EmpStep1(){
           <div class="item4-step1">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <StaticDateTimePicker 
+              className="hidePickerButtons"
               orientation="landscape"
               onChange={(date) => setArrivalDate(date.toISOString())} 
               />
@@ -108,7 +111,7 @@ function EmpStep1(){
           </div>
           <div class="item9-step1">
             <div class="next-button-container">
-              <button onClick={nextButton} className="next-button">Next</button>
+              <button onClick={() => nextButton()} className="next-button">Next</button>
             </div>
           </div>
         </div>
