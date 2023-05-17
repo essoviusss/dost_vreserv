@@ -10,6 +10,8 @@
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 20px;
   grid-row-gap: 10px;
+  margin-bottom: -80px;
+  padding-bottom: 10px;
 }
 
 .grid-container-step3 > div {
@@ -143,7 +145,7 @@
   align-items: center;
   justify-content: center;
   grid-area: 2 / 1 / 3 / 5;
-  height: 20px; /* change this value to the desired height */
+  height: 20px; 
 }
 
 .summary-hr {
@@ -257,14 +259,14 @@
 
 .div3-step3 {
   grid-area: 5 / 1 / 6 / 2;
-  height: 50px;
+  height: 65px;
   background-color: transparent !important;
   box-shadow: none !important;
 }
 
 .div4-step3 {
   grid-area: 5 / 2 / 6 / 3;
-  height: 50px;
+  height: 65px;
   background-color: transparent !important;
   box-shadow: none !important;
 }
@@ -279,7 +281,7 @@
   font-weight: bold;
   font-size: 15px;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 50px;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s;

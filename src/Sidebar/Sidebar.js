@@ -34,18 +34,27 @@ const Sidebar = () => {
           boxShadow: "2px 0px 5px 0px rgba(50, 50, 50, 0.2)", 
           position: 'fixed'
         }}>
-        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large" onClick={handleToggle} />}>
-          {showLogo && (
-            <img
-              src="/images/blue_logo.png"
-              alt="logo"
-              style={{ height: '35px', marginRight: '8px' }}
-            />
-          )}
-          <span className="text-decoration-none" style={{ color: 'inherit', fontSize: '120%' }}>
-            {showLogo ? 'VRESERV' : ''}
-          </span>
-        </CDBSidebarHeader>
+        <CDBSidebarHeader
+  prefix={
+    <i
+      className="fa fa-bars fa-large custom-icon"
+      onClick={handleToggle}
+      style={{ height: '50px' }}
+    />
+  }
+>
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <img
+      src="/images/blue_logo.png"
+      alt="logo"
+      style={{ height: '40px', marginRight: '8px', marginTop: '3px' }}
+    />
+    <span style={{ color: 'inherit', fontSize: '120%', paddingTop: '5px' }}>
+      {showLogo ? 'VRESERV' : ''}
+    </span>
+  </div>
+</CDBSidebarHeader>
+
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
@@ -93,6 +102,15 @@ const Sidebar = () => {
   .text-gray {
     color: gray !important;
   }
+  .custom-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding: 10px;
+    // height: 10px;
+    // margin-top: 10px;
+  }
+  
 `}
 </style>
 

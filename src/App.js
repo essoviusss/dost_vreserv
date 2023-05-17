@@ -14,7 +14,7 @@ import EmpStep3 from './pages/Employee/EmpStep3';
 import EmpStep4 from './pages/Employee/EmpStep4';
 import EmpSummary from './pages/Employee/EmpSummary';
 import DrvDashboard from './pages/Driver/DrvDashboard';
-import DrvTravels from './pages/Driver/DrvTravels';
+import DrvRequestLogs from './pages/Driver/DrvRequestLogs';
 import EmpEditStep1 from './pages/Employee/EmpEditStep1';
 import EmpEditStep2 from './pages/Employee/EmpEditStep2';
 import { FormDataProvider } from './pages/Employee/FormDataContext';
@@ -54,7 +54,7 @@ function MainContent() {
           <Route path="/EmpEditStep2" element={<EmpEditStep2 />} />
           <Route path="/EmpSummary" element={<EmpSummary />} />
           <Route path="/DrvDashboard" element={<DrvDashboard />} />
-          <Route path="/DrvTravels" element={<DrvTravels />} />
+          <Route path="/DrvRequestLogs" element={<DrvRequestLogs />} />
         </Routes>
       </div>
     </div>

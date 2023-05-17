@@ -24,6 +24,7 @@
   /* grid-template-rows: repeat(9, .5fr); */
   grid-column-gap: 20px;
   grid-row-gap: 10px;
+  margin-bottom: -80px;
 }
 
 .div1,
@@ -214,7 +215,7 @@
   font-weight: bold;
   font-size: 15px;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 50px;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -239,7 +240,7 @@
   font-weight: bold;
   font-size: 15px;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 50px;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s;
