@@ -58,6 +58,9 @@ export default function EmpRequestLogs(){
           <table>
           <thead>
             <tr>
+
+              <th>Vehicle</th>
+              <th>Driver</th>
               <th>Destination</th>
               <th>Status</th>
               <th>Action</th>
@@ -69,6 +72,8 @@ export default function EmpRequestLogs(){
               if (request.request_email === email) {
                 return (
                   <tr key={request.request_id}>
+                    <td>{request.vehicle_name}</td>
+                    <td>{request.driver_name}</td>
                     <td>{request.destination}</td>
                     <td>{request.request_status}</td>
                     <td>
@@ -178,5 +183,6 @@ export default function EmpRequestLogs(){
                 </DialogActions>
             </Dialog>
         </div>
+        
     );
 }
