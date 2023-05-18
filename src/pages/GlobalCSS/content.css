@@ -8,10 +8,15 @@
 
 .main-content{
     /* margin-left: 130px; */
-    padding: 15px;
-    background-color: #F4F7FE;
-    height: 100%;
 }
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Change height to min-height */
+    background-color: #F4F7FE;
+    box-sizing: border-box; /* Add this property */
+    padding: 15px; /* Add padding if needed */
+  }  
 *{
     font-family: 'Poppins', sans-serif;
 }

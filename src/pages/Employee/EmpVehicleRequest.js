@@ -7,10 +7,8 @@ export default function EmpVehicleRequest(){
 
     return(
         <div>
-             <div className="main-content">
                 <EmpStep1 />
              </div>
              
-        </div>
     );
 }

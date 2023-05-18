@@ -14,7 +14,7 @@ import EmpStep3 from './pages/Employee/EmpStep3';
 import EmpStep4 from './pages/Employee/EmpStep4';
 import EmpSummary from './pages/Employee/EmpSummary';
 import DrvDashboard from './pages/Driver/DrvDashboard';
-import DrvTravels from './pages/Driver/DrvTravels';
+import DrvRequestLogs from './pages/Driver/DrvRequestLogs';
 import EmpEditStep1 from './pages/Employee/EmpEditStep1';
 import EmpEditStep2 from './pages/Employee/EmpEditStep2';
 import { FormDataProvider } from './pages/Employee/FormDataContext';
@@ -30,11 +30,21 @@ function MainContent() {
   }
 
   return (
-    <div className="App" style={{ display: 'flex' }}>
+    <div className="App" style={{ display: 'flex', backgroundColor: '#F4F7FE'}}>
       <div className="sidebar">
         {userRole === "Employee" ? <Sidebar /> : userRole === "Driver" ? <DriverSidebar /> : null} 
       </div>
-      <div className="main-content" style={{ flex: 1, marginLeft: 0 }}>
+      <div className="main-content" 
+        style={{ 
+        flex: 1,
+        overflow: 'auto',
+        paddingTop: 75,
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingBottom: 15,
+        backgroundColor: '#F4F7FE',
+        boxSizing: 'border-box',
+      }}>
         <Routes>
           <Route path="/EmpHome" element={<RoleGuard requiredRole="Employee" />}>
             <Route index element={<EmpHome />} />
@@ -54,7 +64,7 @@ function MainContent() {
           <Route path="/EmpEditStep2" element={<EmpEditStep2 />} />
           <Route path="/EmpSummary" element={<EmpSummary />} />
           <Route path="/DrvDashboard" element={<DrvDashboard />} />
-          <Route path="/DrvTravels" element={<DrvTravels />} />
+          <Route path="/DrvRequestLogs" element={<DrvRequestLogs />} />
         </Routes>
       </div>
     </div>

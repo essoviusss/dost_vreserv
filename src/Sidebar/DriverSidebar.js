@@ -9,7 +9,7 @@ import {
 } from 'cdbreact';
 import { NavLink, useLocation } from 'react-router-dom';
 
-const DriverSidebar = () => {
+const Sidebar = () => {
   const [showLogo, setShowLogo] = useState(true);
   const [isToggled, setIsToggled] = useState(false);
   const location = useLocation();
@@ -34,25 +34,36 @@ const DriverSidebar = () => {
           boxShadow: "2px 0px 5px 0px rgba(50, 50, 50, 0.2)", 
           position: 'fixed'
         }}>
-        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large" onClick={handleToggle} />}>
-          {showLogo && (
-            <img
-              src="/images/blue_logo.png"
-              alt="logo"
-              style={{ height: '35px', marginRight: '8px' }}
-            />
-          )}
-          <span className="text-decoration-none" style={{ color: 'inherit', fontSize: '120%' }}>
-            {showLogo ? 'VRESERV' : ''}
-          </span>
-        </CDBSidebarHeader>
+        <CDBSidebarHeader
+  prefix={
+    <i
+      className="fa fa-bars fa-large custom-icon"
+      onClick={handleToggle}
+      style={{ height: '50px' }}
+    />
+  }
+>
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <img
+      src="/images/blue_logo.png"
+      alt="logo"
+      style={{ height: '40px', marginRight: '8px', marginTop: '3px' }}
+    />
+    <span style={{ color: 'inherit', fontSize: '120%', paddingTop: '5px' }}>
+      {showLogo ? 'VRESERV' : ''}
+    </span>
+  </div>
+</CDBSidebarHeader>
+
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
             <NavLink exact to="/DrvDashboard" activeClassName="activeClicked">
-              <CDBSidebarMenuItem style={location.pathname === '/DrvDashboard' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/EmpDashboard' ? 'text-primary' : 'text-gray'} icon="columns" iconClassName={`fa-columns ${location.pathname === '/EmpDashboard' ? 'active-icon' : ''}`}><span>Dashboard</span></CDBSidebarMenuItem>
+              <CDBSidebarMenuItem style={location.pathname === '/DrvDashboard' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/DrvDashboard' ? 'text-primary' : 'text-gray'} icon="columns" iconClassName={`fa-columns ${location.pathname === '/DrvDashboard' ? 'active-icon' : ''}`}><span>Dashboard</span></CDBSidebarMenuItem>
             </NavLink>
-           
+            <NavLink exact to="/DrvRequestLogs" activeClassName="activeClicked">
+              <CDBSidebarMenuItem style={location.pathname === '/DrvRequestLogs' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/DrvRequestLogs' ? 'text-primary' : 'text-gray'} icon="user" iconClassName={`fa-user ${location.pathname === '/DrvRequestLogs' ? 'active-icon' : ''}`}>Request Logs</CDBSidebarMenuItem>
+            </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
@@ -88,6 +99,15 @@ const DriverSidebar = () => {
   .text-gray {
     color: gray !important;
   }
+  .custom-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding: 10px;
+    // height: 10px;
+    // margin-top: 10px;
+  }
+  
 `}
 </style>
 
@@ -96,4 +116,4 @@ const DriverSidebar = () => {
 );
 };
 
-export default DriverSidebar;
+export default Sidebar;

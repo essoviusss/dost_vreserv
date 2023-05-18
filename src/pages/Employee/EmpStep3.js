@@ -10,6 +10,7 @@ import '../Employee/components/EmpStep3.css';
 import Header from "../../header/header";
 import '../GlobalCSS/content.css';
 import '../Employee/EmpStep4.js';
+import Footer from "../Employee/EmpFooter.js";
 
 function EmpStep3() {
     const { formData } = useFormData();
@@ -19,6 +20,7 @@ function EmpStep3() {
 
     const nextButton = () => {
       navigate("/EmpStep4");
+      window.scrollTo(0, 0);
     };
 
     function submitForm() {
@@ -46,8 +48,7 @@ function EmpStep3() {
         });
       }
     return (
-      <div style={{ paddingTop: '60px' }}>
-      <div className="main-content">
+      <div className="page-container">
         <Header />
         <div className="step3-text">Step 3: Review the inputted details</div>
         <div className="grid-container-step3">
@@ -174,19 +175,16 @@ function EmpStep3() {
           </div>
           <div className="div3-step3">
             <div class="back-button-container">
-              <button className="back-button" onClick={() => navigate(-1)}>Back</button>
+              <button className="back-button" onClick={() => { navigate(-1); window.scrollTo(0, 0); }}>Back</button>
             </div>
           </div>
           <div className="div4-step3">
             <div class="submit-button-container">
               <button className="submit-button" onClick={submitForm}>Submit</button>
             </div>
-            <div class="submit-button-container">
-              <button className="submit-button" onClick={nextButton}>Next</button>
-            </div>
           </div>
           </div>
-      </div>
+      <Footer activePage="EmpStep3" />
     </div>
     );
   }

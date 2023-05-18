@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useFormData } from "./FormDataContext";
 import '../Employee/components/EmpStep2.css';
 import Header from "../../header/header";
+import Footer from "../Employee/EmpFooter.js";
 import '../GlobalCSS/content.css';
 
 const containerStyle = {
@@ -86,13 +87,13 @@ function EmpStep2() {
     updateFormData("passengerNames", passengerNames);
     updateFormData("requestedBy", requestedBy);
     navigate("/EmpStep3");
+    window.scrollTo(0, 0);
   };
 
   
   
   return (
-    <div style={{ paddingTop: '60px' }}>
-      <div className="main-content">
+    <div className="page-container">
         <Header />
         <div className="step2-text">Step 2: Input your travel details</div>
         <div className="grid-container-step2">
@@ -163,7 +164,7 @@ function EmpStep2() {
           </div>
           <div className="div11">
             <div className="back-button-container">
-              <button className="back-button" onClick={() => navigate(-1)}>Back</button>
+              <button className="back-button" onClick={() => { navigate(-1); window.scrollTo(0, 0); }}>Back</button>
             </div>
           </div>
           <div className="div12">
@@ -172,8 +173,10 @@ function EmpStep2() {
             </div>
           </div>
         </div>
-      </div>
+      <Footer activePage="EmpStep2" />
     </div>
+
+    
   );
 }
 export default EmpStep2;
