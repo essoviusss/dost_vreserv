@@ -65,7 +65,7 @@ export default function EmpRequestLogs(){
   }, [request]);
 
     return(
-        <div className='page-container'>
+        <div className="page-container">
           <Header/>
           <Paper>
             <TableContainer>

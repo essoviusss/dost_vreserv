@@ -30,7 +30,7 @@ function MainContent() {
   }
 
   return (
-    <div className="App" style={{ display: 'flex', backgroundColor: '#F4F7FE'}}>
+    <div className="App" style={{ display: 'flex', backgroundColor: '#F4F7FE', minHeight: '100vh',}}>
       <div className="sidebar">
         {userRole === "Employee" ? <Sidebar /> : userRole === "Driver" ? <DriverSidebar /> : null} 
       </div>
@@ -44,6 +44,7 @@ function MainContent() {
         paddingBottom: 15,
         backgroundColor: '#F4F7FE',
         boxSizing: 'border-box',
+        minHeight: '100%',
       }}>
         <Routes>
           <Route path="/EmpHome" element={<RoleGuard requiredRole="Employee" />}>
