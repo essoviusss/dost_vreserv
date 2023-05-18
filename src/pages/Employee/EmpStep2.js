@@ -81,13 +81,17 @@ function EmpStep2() {
   const pinIconURL = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
 
   const nextButton = () => {
-    updateFormData("address", address);
-    updateFormData("purpose", purpose);
-    updateFormData("numPassengers", numPassengers);
-    updateFormData("passengerNames", passengerNames);
-    updateFormData("requestedBy", requestedBy);
-    navigate("/EmpStep3");
-    window.scrollTo(0, 0);
+    if(address === "" || purpose === "" || numPassengers === 0 || passengerNames === [] || requestedBy === ""){
+      alert("Fill up all the fields!");
+    } else{
+      updateFormData("address", address);
+      updateFormData("purpose", purpose);
+      updateFormData("numPassengers", numPassengers);
+      updateFormData("passengerNames", passengerNames);
+      updateFormData("requestedBy", requestedBy);
+      navigate("/EmpStep3");
+      window.scrollTo(0, 0);
+    }
   };
 
   

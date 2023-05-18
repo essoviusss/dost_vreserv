@@ -14,8 +14,18 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@mui/material';
 import Paper from '@mui/material/Paper';
+import '../Employee/components/EmpRequestLogs.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 
 export default function EmpRequestLogs(){
+  //font
+  const theme = createTheme({
+    typography: {
+      fontFamily: 'Poppins, sans-serif',
+    },
+  });
+
   //defaultValue
   const [selectedRequest, setSelectedRequest] = useState({});
   const [request, setRequest] = useState([]);
@@ -65,18 +75,20 @@ export default function EmpRequestLogs(){
   }, [request]);
 
     return(
+      <ThemeProvider theme={theme}>
         <div className="page-container">
           <Header/>
-          <Paper>
+          <div className="rlogs-text">Requests</div>
+          <Paper sx={{ borderRadius: '10px' }}>
             <TableContainer>
               <Table>
                 <thead>
                   <tr>
-                    <th style={{ textAlign: 'center' }}>Vehicle</th>
-                    <th style={{ textAlign: 'center' }}>Driver</th>
-                    <th style={{ textAlign: 'center' }}>Destination</th>
-                    <th style={{ textAlign: 'center' }}>Status</th>
-                    <th style={{ textAlign: 'center' }}>Action</th>
+                    <th className='requestlog-th' style={{ textAlign: 'center' }}>Vehicle</th>
+                    <th className='requestlog-th' style={{ textAlign: 'center' }}>Driver</th>
+                    <th className='requestlog-th' style={{ textAlign: 'center' }}>Destination</th>
+                    <th className='requestlog-th' style={{ textAlign: 'center' }}>Status</th>
+                    <th className='requestlog-th' style={{ textAlign: 'center' }}>Action</th>
                   </tr>
                 </thead>
                 <TableBody>
@@ -85,10 +97,25 @@ export default function EmpRequestLogs(){
                       <TableCell style={{ textAlign: 'center' }}>{request.vehicle_name}</TableCell>
                       <TableCell style={{ textAlign: 'center' }}>{request.driver_name}</TableCell>
                       <TableCell style={{ textAlign: 'center' }}>{request.destination}</TableCell>
-                      <TableCell style={{ textAlign: 'center' }}>{request.request_status}</TableCell>
+                      <TableCell style={{ textAlign: 'center', padding: 0 }}>
+                        <div style={{ 
+                          backgroundColor: 
+                            request.request_status === "Pending" ? '#FDC858' :
+                            request.request_status === "Approved" ? 'green' :
+                            request.request_status === "Disapproved" ? '#b21127' :
+                            request.request_status === "For Approval" ? '#025BAD' : 'inherit', 
+                          color: 'white',
+                          padding: '5px 5px',
+                          borderRadius: '50px',
+                          width: '80%', // Adjust as needed
+                          margin: 'auto',
+                        }}>
+                          {request.request_status}
+                        </div>
+                      </TableCell>
                       <TableCell style={{ textAlign: 'center' }}>
                         <Button variant="contained" onClick={() => handleOpenView(request)}>
-                          View
+                          View Details
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -193,5 +220,6 @@ export default function EmpRequestLogs(){
           </DialogActions>
       </Dialog>
     </div>
+    </ThemeProvider>
   );
 }

@@ -4,7 +4,6 @@ import { useFormData } from "./FormDataContext";
 import dayjs from "dayjs";
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../Employee/components/EmpStep3.css';
 import Header from "../../header/header";
@@ -16,12 +15,7 @@ function EmpStep3() {
     const { formData } = useFormData();
     const navigate = useNavigate();
     const UID = uuidv4();
-    const notif = () => toast("Request Submitted!");
-
-    const nextButton = () => {
-      navigate("/EmpStep4");
-      window.scrollTo(0, 0);
-    };
+    const { clearFormData } = useFormData();
 
     function submitForm() {
         const email = localStorage.getItem("email");
@@ -42,10 +36,11 @@ function EmpStep3() {
         axios.post(url, fData)
           .then(response => {
             response.data.trim() === "Success" ? navigate("/EmpStep4") : alert(response.data);
+            clearFormData();
           })
           .catch(error => {
             alert(error);
-        });
+        });     
       }
     return (
       <div className="page-container">
