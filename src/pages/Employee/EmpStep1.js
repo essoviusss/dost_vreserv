@@ -18,8 +18,8 @@ function EmpStep1(){
   const [drivers, setDrivers] = useState([]);
 
   //formdata
-  const [departureDate, setDepartureDate] = useState(formData.departureDate || new Date().toISOString());
-  const [arrivalDate, setArrivalDate] = useState(formData.arrivalDate || new Date().toISOString());
+  const [departureDate, setDepartureDate] = useState(formData.departureDate || "");
+  const [arrivalDate, setArrivalDate] = useState(formData.arrivalDate || "");
   const [selectedVehicle, setSelectedVehicle] = useState(formData.selectedVehicle || "");
   const [selectedDriver, setSelectedDriver] = useState(formData.selectedDriver || "");
   
@@ -53,12 +53,18 @@ function EmpStep1(){
   
 
   const nextButton = () => {
-    updateFormData("departureDate", departureDate);
-    updateFormData("arrivalDate", arrivalDate);
-    updateFormData("selectedVehicle", selectedVehicle);
-    updateFormData("selectedDriver", selectedDriver);
-    navigate("/EmpStep2")
-    window.scrollTo(0, 0);
+    if(!departureDate || !arrivalDate  || selectedVehicle === "" || selectedDriver === ""){
+      alert("Fill up all the fields!");
+    } else{
+      updateFormData("departureDate", departureDate);
+      updateFormData("arrivalDate", arrivalDate);
+      updateFormData("selectedVehicle", selectedVehicle);
+      updateFormData("selectedDriver", selectedDriver);
+      console.log(departureDate);
+      navigate("/EmpStep2")
+      window.scrollTo(0, 0);
+    }
+    
   };
     
 
