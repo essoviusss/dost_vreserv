@@ -6,8 +6,7 @@ import DriverHeader from "../../header/DriverHeader";
 
 export default function EmpDashboard(){
     return(
-        <div style={{ paddingTop: '60px', backgroundColor: '#F4F7FE' }}>
-        <div className="main-content" style={{ backgroundColor: '#F4F7FE' }}>
+        <div className="page-container">
             <DriverHeader/>
             <div className="grid-container-drv">
               <div className="item1-drv">1</div>
@@ -17,7 +16,6 @@ export default function EmpDashboard(){
               <div className="item5-drv">5</div>
               <div className="item6-drv">6</div>
             </div>
-        </div>
         </div>
     );
 }
