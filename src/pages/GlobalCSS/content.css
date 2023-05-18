@@ -12,7 +12,6 @@
 .page-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Change height to min-height */
     background-color: #F4F7FE;
     box-sizing: border-box; /* Add this property */
     padding: 15px; /* Add padding if needed */

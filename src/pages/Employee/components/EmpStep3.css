@@ -10,7 +10,7 @@
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 20px;
   grid-row-gap: 10px;
-  margin-bottom: -80px;
+  margin-bottom: -70px;
   padding-bottom: 10px;
 }
 
