@@ -262,6 +262,7 @@
   height: 65px;
   background-color: transparent !important;
   box-shadow: none !important;
+  z-index: 1;
 }
 
 .div4-step3 {
@@ -269,6 +270,7 @@
   height: 65px;
   background-color: transparent !important;
   box-shadow: none !important;
+  z-index: 1;
 }
 
 .submit-button-container {

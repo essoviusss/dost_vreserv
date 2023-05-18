@@ -93,8 +93,7 @@ function EmpStep2() {
   
   
   return (
-    <div style={{ paddingTop: '60px' }}>
-      <div className="main-content">
+    <div className="page-container">
         <Header />
         <div className="step2-text">Step 2: Input your travel details</div>
         <div className="grid-container-step2">
@@ -174,7 +173,6 @@ function EmpStep2() {
             </div>
           </div>
         </div>
-      </div>
       <Footer activePage="EmpStep2" />
     </div>
 

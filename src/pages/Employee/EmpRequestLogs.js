@@ -1,7 +1,6 @@
 
 import '../Employee/components/EmpTrack.css'
 import Header from "../../header/header";
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -66,8 +65,8 @@ export default function EmpRequestLogs(){
   }, [request]);
 
     return(
-        <div style={{paddingTop: '60px'}}>
-            <Header/>
+        <div className='page-container'>
+          <Header/>
           <Paper>
             <TableContainer>
               <Table>
@@ -109,97 +108,90 @@ export default function EmpRequestLogs(){
           </Paper>
       {/* view modal*/}
       <Dialog open={openView} onClose={CloseView} fullWidth maxWidth="sm">
-            <DialogTitle>View Details</DialogTitle>
-            <DialogContent>
-                        <DialogContentText>
-                            {/* To add a new employee account, please enter the details in the designated input field. */}
-                        </DialogContentText>
-                            <div>
-                            <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="name"
-                                    label="Vehicle to be Requested"
-                                    type="text"
-                                    fullWidth
-                                    variant="filled"
-                                    defaultValue={selectedRequest.vehicle_name}
-                                    InputProps={{
-                                        readOnly: true,
-                                      }}
-                                />
-                            </div>
-                            <div>
-                            <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="name"
-                                    label="Name of the Driver"
-                                    type="text"
-                                    fullWidth
-                                    variant="filled"
-                                    defaultValue={selectedRequest.driver_name}
-                                    InputProps={{
-                                        readOnly: true,
-                                      }}
-                                />
-                            </div>
-                            <div>
-                            <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="name"
-                                    label="Status"
-                                    type="text"
-                                    fullWidth
-                                    variant="filled"
-                                    defaultValue={selectedRequest.request_status}
-                                    InputProps={{
-                                        readOnly: true,
-                                      }}
-                                />
-                            </div>
-                            <div>
-                                <h6>Schedule of Travel</h6>
-                            </div>                                
-                                
-                            <div>
-                                <label>Date: {selectedRequest.request_date}</label>
-                            </div>
-
-                            <div>
-                                <label>Time of Departure: {selectedRequest.departure_time}</label>
-                            </div>
-                            <div>
-                                <label>Time of Return to Garage: {selectedRequest.arrival_time}</label>
-                            </div>
-                            <div>
-                                <label>Destination: {selectedRequest.destination}</label>
-                            </div>
-                            <div>
-                                <h6>Other Details</h6>
-                            </div>
-                            <div>
-                                <label>Total No. of Passenger/s : {selectedRequest.passenger_count}</label>
-                            </div>
-                            <div>
-                                <label>Name of Passenger/s: </label>
-                                {selectedRequest.passenger_names && Array.isArray(selectedRequest.passenger_names) && selectedRequest.passenger_names.map((passenger, index) => (
-                                  <div key={index}>{passenger}</div>
-                                ))}
-                            </div>
-                            <div>
-                                <label>Purpose: {selectedRequest.purpose}</label>
-                            </div>
-                            <div>
-                                <label>Requested by: {selectedRequest.requested_by}</label>
-                            </div>
-                    </DialogContent>
-                <DialogActions>
-                <Button onClick={CloseView}>Close</Button>
-                </DialogActions>
-            </Dialog>
-        </div>
-        
-    );
+        <DialogTitle>View Details</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {/* To add a new employee account, please enter the details in the designated input field. */}
+          </DialogContentText>
+          <div>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Vehicle to be Requested"
+              type="text"
+              fullWidth
+              variant="filled"
+              defaultValue={selectedRequest.vehicle_name}
+              InputProps={{ readOnly: true,}}
+            />
+          </div>
+          <div>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Name of the Driver"
+              type="text"
+              fullWidth
+              variant="filled"
+              defaultValue={selectedRequest.driver_name}
+              InputProps={{ readOnly: true, }}
+            />
+          </div>
+          <div>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Status"
+              type="text"
+              fullWidth
+              variant="filled"
+              defaultValue={selectedRequest.request_status}
+              InputProps={{
+                  readOnly: true,
+                }}
+            />
+          </div>
+          <div>
+            <h6>Schedule of Travel</h6>
+          </div>                                  
+          <div>
+            <label>Date: {selectedRequest.request_date}</label>
+          </div>
+          <div>
+            <label>Time of Departure: {selectedRequest.departure_time}</label>
+          </div>
+          <div>
+            <label>Time of Return to Garage: {selectedRequest.arrival_time}</label>
+          </div>
+          <div>
+            <label>Destination: {selectedRequest.destination}</label>
+          </div>
+          <div>
+            <h6>Other Details</h6>
+          </div>
+          <div>
+            <label>Total No. of Passenger/s : {selectedRequest.passenger_count}</label>
+          </div>
+          <div>
+            <label>Name of Passenger/s: </label>
+            {selectedRequest.passenger_names && Array.isArray(selectedRequest.passenger_names) && selectedRequest.passenger_names.map((passenger, index) => (
+              <div key={index}>{passenger}</div>
+            ))}
+          </div>
+          <div>
+            <label>Purpose: {selectedRequest.purpose}</label>
+          </div>
+          <div>
+            <label>Requested by: {selectedRequest.requested_by}</label>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={CloseView}>Close</Button>
+          </DialogActions>
+      </Dialog>
+    </div>
+  );
 }

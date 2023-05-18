@@ -30,11 +30,21 @@ function MainContent() {
   }
 
   return (
-    <div className="App" style={{ display: 'flex' }}>
+    <div className="App" style={{ display: 'flex', backgroundColor: '#F4F7FE'}}>
       <div className="sidebar">
         {userRole === "Employee" ? <Sidebar /> : userRole === "Driver" ? <DriverSidebar /> : null} 
       </div>
-      <div className="main-content" style={{ flex: 1, marginLeft: 0 }}>
+      <div className="main-content" 
+        style={{ 
+        flex: 1,
+        overflow: 'auto',
+        paddingTop: 75,
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingBottom: 15,
+        backgroundColor: '#F4F7FE',
+        boxSizing: 'border-box',
+      }}>
         <Routes>
           <Route path="/EmpHome" element={<RoleGuard requiredRole="Employee" />}>
             <Route index element={<EmpHome />} />

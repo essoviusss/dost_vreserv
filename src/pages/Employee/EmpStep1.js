@@ -63,66 +63,62 @@ function EmpStep1(){
     
 
   return (
-        <div className="root" style={{ paddingTop: '60px' }}>
-          <div className="main-content">
-            <Header />
-            <div className="step1-text">Step 1: Choosing Date & Time, Vehicle, and Driver</div>
-            <div className="grid-container-step1">
-              <div className="item1-step1">DEPARTURE DATE AND TIME</div>
-              <div className="item2-step1">ARRIVAL DATE AND TIME</div>
-              <div className="item3-step1">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <StaticDateTimePicker 
-                    className="hidePickerButtons"
-                orientation="landscape"
-                    onChange={(date) => setDepartureDate(date.toISOString())} 
-                  />
-                </LocalizationProvider> 
-              </div>
-              <div className="item4-step1">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <StaticDateTimePicker 
-                    className="hidePickerButtons"
+    <div className="page-container">
+      <Header />
+      <div className="step1-text">Step 1: Choosing Date & Time, Vehicle, and Driver</div>
+      <div className="grid-container-step1">
+        <div className="item1-step1">DEPARTURE DATE AND TIME</div>
+        <div className="item2-step1">ARRIVAL DATE AND TIME</div>
+        <div className="item3-step1">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <StaticDateTimePicker
+              className="hidePickerButtons"
               orientation="landscape"
-                    onChange={(date) => setArrivalDate(date.toISOString())} 
-                  />
-                </LocalizationProvider> 
-              </div>
-              <div className="item5-step1">AVAILABLE VEHICLE</div>
-              <div className="item6-step1">AVAILABLE DRIVER</div>
-              <div className="item7-step1">
-                <select value={selectedVehicle} onChange={(e) => setSelectedVehicle(e.target.value)}>
-                  <option>Select Vehicle</option>
-                  {vehicles.map(vehicle => (
-                    <option key={vehicle.vehicle_id} value={vehicle.vehicle_name}>
-                      {vehicle.vehicle_name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="item8-step1">
-                <select value={selectedDriver} onChange={(e) => setSelectedDriver(e.target.value)}>
-                  <option>Select Driver</option>
-                  {drivers.map(driver => (
-                    <option key={driver.driver_id} value={driver.driver_name}>
-                      {driver.driver_name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="item9-step1">
-                <div className="next-button-container">
-                  <button onClick={() => nextButton()} className="next-button">Next</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="footer-box">
-          <Footer activePage="EmpStep1" />
+              onChange={(date) => setDepartureDate(date.toISOString())}
+            />
+          </LocalizationProvider>
+        </div>
+        <div className="item4-step1">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <StaticDateTimePicker
+              className="hidePickerButtons"
+              orientation="landscape"
+              onChange={(date) => setArrivalDate(date.toISOString())}
+            />
+          </LocalizationProvider>
+        </div>
+        <div className="item5-step1">AVAILABLE VEHICLE</div>
+        <div className="item6-step1">AVAILABLE DRIVER</div>
+        <div className="item7-step1">
+          <select value={selectedVehicle} onChange={(e) => setSelectedVehicle(e.target.value)}>
+            <option>Select Vehicle</option>
+            {vehicles.map((vehicle) => (
+              <option key={vehicle.vehicle_id} value={vehicle.vehicle_name}>
+                {vehicle.vehicle_name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="item8-step1">
+          <select value={selectedDriver} onChange={(e) => setSelectedDriver(e.target.value)}>
+            <option>Select Driver</option>
+            {drivers.map((driver) => (
+              <option key={driver.driver_id} value={driver.driver_name}>
+                {driver.driver_name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="item9-step1">
+          <div className="next-button-container">
+            <button onClick={() => nextButton()} className="next-button">Next</button>
           </div>
         </div>
-      
-
-  );
+      </div>
+      <div className="footer-box">
+        <Footer activePage="EmpStep1" />
+      </div>
+    </div>
+  );  
 }
 export default EmpStep1;

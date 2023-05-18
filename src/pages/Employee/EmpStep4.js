@@ -15,9 +15,7 @@ export default function EmpStep4() {
   };
 
   return (
-    <div>
-    <div style={{ paddingTop: '60px' }}>
-      <div className="main-content">
+    <div className="page-container">
         <Header />
         <div className="grid-container-step4">
             <div className="div1-step4">
@@ -39,8 +37,7 @@ export default function EmpStep4() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      
     <Footer activePage="EmpStep4" />
     </div>
   );
