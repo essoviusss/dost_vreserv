@@ -4,7 +4,6 @@ import Header from "../../header/header";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import Header from "./Header";
 
 //material ui
 import Button from '@mui/material/Button';
@@ -14,6 +13,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@mui/material';
+import Paper from '@mui/material/Paper';
 
 export default function EmpRequestLogs(){
   //defaultValue
@@ -33,7 +34,22 @@ export default function EmpRequestLogs(){
     setOpenView(false);
   };
 
+  //table
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(7);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
   const email = localStorage.getItem("email");
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const filteredRequests = request.filter((item) => item.request_email === email);
+
 
   //read
   useEffect(() => {
@@ -52,41 +68,45 @@ export default function EmpRequestLogs(){
     return(
         <div style={{paddingTop: '60px'}}>
             <Header/>
-          <table>
-          <thead>
-            <tr>
-
-              <th>Vehicle</th>
-              <th>Driver</th>
-              <th>Destination</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {request.map((request) =>
-            {
-              if (request.request_email === email) {
-                return (
-                  <tr key={request.request_id}>
-                    <td>{request.vehicle_name}</td>
-                    <td>{request.driver_name}</td>
-                    <td>{request.destination}</td>
-                    <td>{request.request_status}</td>
-                    <td>
-                      <Button variant="contained" onClick={() => handleOpenView(request)}>
-                        View
-                      </Button>  
-                    </td>
+          <Paper>
+            <TableContainer>
+              <Table>
+                <thead>
+                  <tr>
+                    <th style={{ textAlign: 'center' }}>Vehicle</th>
+                    <th style={{ textAlign: 'center' }}>Driver</th>
+                    <th style={{ textAlign: 'center' }}>Destination</th>
+                    <th style={{ textAlign: 'center' }}>Status</th>
+                    <th style={{ textAlign: 'center' }}>Action</th>
                   </tr>
-                );
-              } else {
-                return null;
-              }
-            }
-            )}
-          </tbody>
-        </table>
+                </thead>
+                <TableBody>
+                  {filteredRequests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((request) => (
+                    <TableRow key={request.request_id}>
+                      <TableCell style={{ textAlign: 'center' }}>{request.vehicle_name}</TableCell>
+                      <TableCell style={{ textAlign: 'center' }}>{request.driver_name}</TableCell>
+                      <TableCell style={{ textAlign: 'center' }}>{request.destination}</TableCell>
+                      <TableCell style={{ textAlign: 'center' }}>{request.request_status}</TableCell>
+                      <TableCell style={{ textAlign: 'center' }}>
+                        <Button variant="contained" onClick={() => handleOpenView(request)}>
+                          View
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={filteredRequests.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableContainer>
+          </Paper>
       {/* view modal*/}
       <Dialog open={openView} onClose={CloseView} fullWidth maxWidth="sm">
             <DialogTitle>View Details</DialogTitle>
