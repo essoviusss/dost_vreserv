@@ -16,7 +16,7 @@ import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow 
 import Paper from '@mui/material/Paper';
 import '../Employee/components/EmpRequestLogs.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 export default function EmpRequestLogs(){
   //font
@@ -139,7 +139,9 @@ export default function EmpRequestLogs(){
           </Paper>
       {/* view modal*/}
       <Dialog open={openView} onClose={CloseView} fullWidth maxWidth="md">
-        <DialogTitle>View Details</DialogTitle>
+      <Button onClick={CloseView} style={{ color: 'gray', position: 'absolute', top: 10, right: 0, paddingLeft: 0, paddingRight: 0 }}>
+      <CloseRoundedIcon />
+      </Button>
         <DialogContent>
           <DialogContentText>
             {/* To add a new employee account, please enter the details in the designated input field. */}
@@ -258,9 +260,6 @@ export default function EmpRequestLogs(){
               </div>
             </div>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={CloseView}>Close</Button>
-          </DialogActions>
       </Dialog>
     </div>
     </ThemeProvider>
