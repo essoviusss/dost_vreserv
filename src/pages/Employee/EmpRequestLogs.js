@@ -94,31 +94,35 @@ export default function EmpRequestLogs(){
                 <TableBody>
                   {filteredRequests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((request) => (
                     <TableRow key={request.request_id}>
-                      <TableCell style={{ textAlign: 'center' }}>{request.vehicle_name}</TableCell>
-                      <TableCell style={{ textAlign: 'center' }}>{request.driver_name}</TableCell>
-                      <TableCell style={{ textAlign: 'center' }}>{request.destination}</TableCell>
-                      <TableCell style={{ textAlign: 'center', padding: 0 }}>
-                        <div style={{ 
-                          backgroundColor: 
-                            request.request_status === "Pending" ? '#FDC858' :
-                            request.request_status === "Approved" ? 'green' :
-                            request.request_status === "Disapproved" ? '#b21127' :
-                            request.request_status === "For Approval" ? '#025BAD' : 'inherit', 
-                          color: 'white',
-                          padding: '5px 5px',
-                          borderRadius: '50px',
-                          width: '80%', // Adjust as needed
-                          margin: 'auto',
-                        }}>
-                          {request.request_status}
-                        </div>
-                      </TableCell>
-                      <TableCell style={{ textAlign: 'center' }}>
-                        <Button variant="contained" onClick={() => handleOpenView(request)}>
-                          View Details
-                        </Button>
-                      </TableCell>
-                    </TableRow>
+                    <TableCell style={{ textAlign: 'center', wordBreak: 'break-word', maxWidth: '140px' }}>{request.vehicle_name}</TableCell>
+                    <TableCell style={{ textAlign: 'center', wordBreak: 'break-word', maxWidth: '140px' }}>{request.driver_name}</TableCell>
+                    <TableCell style={{ textAlign: 'center', wordBreak: 'break-word', maxWidth: '180px' }}>{request.destination}</TableCell>
+                    <TableCell style={{ textAlign: 'center', padding: 0 }}>
+                      <div style={{ 
+                        backgroundColor: 
+                          request.request_status === "Pending" ? '#FDC858' :
+                          request.request_status === "Approved" ? 'green' :
+                          request.request_status === "Disapproved" ? '#b21127' :
+                          request.request_status === "Cancelled" ? '#6e6e6e' :
+                          request.request_status === "For Approval" ? '#025BAD' : 'inherit', 
+                        color: 'white',
+                        padding: '5px 5px',
+                        borderRadius: '50px',
+                        width: '80%', // Adjust as needed
+                        margin: 'auto',
+                        wordBreak: 'break-word',
+                        maxWidth: '120px' // Adjust the width as needed
+                      }}>
+                        {request.request_status}
+                      </div>
+                    </TableCell>
+                    <TableCell style={{ textAlign: 'center', wordBreak: 'break-word', maxWidth: '100px' }}>
+                      <Button variant="contained" onClick={() => handleOpenView(request)}>
+                        View Details
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                                  
                   ))}
                 </TableBody>
               </Table>
@@ -134,86 +138,125 @@ export default function EmpRequestLogs(){
             </TableContainer>
           </Paper>
       {/* view modal*/}
-      <Dialog open={openView} onClose={CloseView} fullWidth maxWidth="sm">
+      <Dialog open={openView} onClose={CloseView} fullWidth maxWidth="md">
         <DialogTitle>View Details</DialogTitle>
         <DialogContent>
           <DialogContentText>
             {/* To add a new employee account, please enter the details in the designated input field. */}
           </DialogContentText>
-          <div>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Vehicle to be Requested"
-              type="text"
-              fullWidth
-              variant="filled"
-              defaultValue={selectedRequest.vehicle_name}
-              InputProps={{ readOnly: true,}}
-            />
-          </div>
-          <div>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Name of the Driver"
-              type="text"
-              fullWidth
-              variant="filled"
-              defaultValue={selectedRequest.driver_name}
-              InputProps={{ readOnly: true, }}
-            />
-          </div>
-          <div>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Status"
-              type="text"
-              fullWidth
-              variant="filled"
-              defaultValue={selectedRequest.request_status}
-              InputProps={{
-                  readOnly: true,
-                }}
-            />
-          </div>
-          <div>
-            <h6>Schedule of Travel</h6>
-          </div>                                  
-          <div>
-            <label>Date: {selectedRequest.request_date}</label>
-          </div>
-          <div>
-            <label>Time of Departure: {selectedRequest.departure_time}</label>
-          </div>
-          <div>
-            <label>Time of Return to Garage: {selectedRequest.arrival_time}</label>
-          </div>
-          <div>
-            <label>Destination: {selectedRequest.destination}</label>
-          </div>
-          <div>
-            <h6>Other Details</h6>
-          </div>
-          <div>
-            <label>Total No. of Passenger/s : {selectedRequest.passenger_count}</label>
-          </div>
-          <div>
-            <label>Name of Passenger/s: </label>
-            {selectedRequest.passenger_names && Array.isArray(selectedRequest.passenger_names) && selectedRequest.passenger_names.map((passenger, index) => (
-              <div key={index}>{passenger}</div>
-            ))}
-          </div>
-          <div>
-            <label>Purpose: {selectedRequest.purpose}</label>
-          </div>
-          <div>
-            <label>Requested by: {selectedRequest.requested_by}</label>
-          </div>
+          <div className="div-empreq">
+              <div className="div1-empreq">
+                <div className="div1-empreq">
+                  <img className="summary-logo" src="/images/summary_logo.png"/>
+                </div>
+              </div>
+              <div className="div2-empreq">
+                <p className="header-empreq">{selectedRequest.vehicle_name}</p>
+                <p className="header-label-empreq">Vehicle to be requested</p>
+              </div>
+              <div className="div3-empreq">
+                <p className="header-empreq">{selectedRequest.driver_name}</p>
+                <p className="header-label-empreq">Name of the driver</p>
+              </div>
+              <div className="status-button-container">
+                {selectedRequest && selectedRequest.request_status && (
+                  <button className={`status-button ${selectedRequest.request_status.replace(/\s+/g, '')}`}>
+                    {selectedRequest.request_status}
+                  </button>
+                )}
+              </div>
+              <div className="div5-empreq">
+                <hr class="empreq-hr"/>
+              </div>
+              <div className="div6-empreq">
+                <p className="schedlabel-empreq">SCHEDULE OF TRAVEL</p>
+              </div>
+              <div className="div7-empreq">
+                <div className="div7table-empreq">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Departure Date and Time:</p>
+                      </td>
+                      <td>
+                        <p className="empreq-details">
+                        {selectedRequest.departure_time}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Arrival Date and Time:</p>
+                      </td>
+                      <td>
+                      <p className="empreq-details">
+                        {selectedRequest.arrival_time}E</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Destination:</p>
+                      </td>
+                      <td>
+                      <p className="empreq-details">
+                      {selectedRequest.destination}</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+              <div className="div9-empreq">
+                <p className="schedlabel-empreq">OTHER DETAILS</p>
+              </div>
+              <div className="div10-empreq">
+              <div className="div10table-empreq">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Total No. of Passenger/s:</p>
+                      </td>
+                      <td>
+                        <p className="empreq-details">
+                          {selectedRequest.passenger_count}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Name of Passenger/s:</p>
+                      </td>
+                      <td>
+                      <p className="empreq-details">
+                      {selectedRequest.passenger_names && Array.isArray(selectedRequest.passenger_names) && selectedRequest.passenger_names.map((passenger, index) => (
+                        <div key={index}>{passenger}</div>
+                      ))}
+                      </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Purpose:</p>
+                      </td>
+                      <td>
+                      <p className="empreq-details">
+                        {selectedRequest.purpose}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Requested By:</p>
+                      </td>
+                      <td>
+                      <p className="empreq-details">
+                      {selectedRequest.requested_by}</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+            </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={CloseView}>Close</Button>
