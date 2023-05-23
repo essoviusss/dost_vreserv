@@ -115,7 +115,6 @@ export default function Login(){
 
     const signIn = async () => {
         const url = "http://localhost/vreserv_api/login.php";
-        //Select Form Validation
         if (!validateSelect()) {
           return;
         }
@@ -137,6 +136,7 @@ export default function Login(){
       
           const jwtToken = await response.data.token;
           const userRole = await response.data.role.trim();
+          const userId = await response.data.userId;
       
           if (userRole === "Employee" && role === "Employee") {
             alert("Login Successful");
@@ -149,6 +149,7 @@ export default function Login(){
             localStorage.setItem("token", jwtToken);
             localStorage.setItem("userRole", userRole);
             localStorage.setItem("email", email); 
+            localStorage.setItem("userId", userId);
             navigate("/DrvDashboard", { replace: true });
         } else {
             alert("User does not exist");
