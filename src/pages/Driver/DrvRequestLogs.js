@@ -23,6 +23,8 @@ export default function DrvRequestLogs() {
   //defaultValue
   const [selectedRequest, setSelectedRequest] = useState({});
   const [request, setRequest] = useState([]);
+  const [updatedRequestStatus, setUpdatedRequestStatus] = useState("");
+
 
   //modal
   const [openView, setOpenView] = React.useState(false);
@@ -64,6 +66,7 @@ export default function DrvRequestLogs() {
 
       try {
         const response = await axios.post(url, fData);
+        console.log(userId);
         if (Array.isArray(response.data.data)) {
           setRequest(response.data.data);
         }
@@ -82,6 +85,53 @@ export default function DrvRequestLogs() {
       console.log('Error generating PDF:', error);
     }
   };
+  const handleAccomplished = async (request) => {
+    try {
+      // Update the request status to "Approved" in the backend
+      const url = "http://localhost/vreserv_api/update_status.php";
+      const updatedStatus = "Accomplished";
+  
+      const formData = new FormData();
+      formData.append("request_id", request.request_id);
+      formData.append("request_status", updatedStatus);
+  
+      await axios.post(url, formData);
+  
+      // Update the request status in the frontend
+      const updatedRequest = { ...request, request_status: updatedStatus };
+      const updatedRequestList = request.map((req) => (req.request_id === request.request_id ? updatedRequest : req));
+  
+      setRequest(updatedRequestList);
+      setUpdatedRequestStatus(updatedStatus);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleNotAccomplished = async (request) => {
+    try {
+      // Update the request status to "Approved" in the backend
+      const url = "http://localhost/vreserv_api/update_status.php";
+      const updatedStatus = "Not Accomplished";
+  
+      const formData = new FormData();
+      formData.append("request_id", request.request_id);
+      formData.append("request_status", updatedStatus);
+  
+      await axios.post(url, formData);
+  
+      // Update the request status in the frontend
+      const updatedRequest = { ...request, request_status: updatedStatus };
+      const updatedRequestList = request.map((req) => (req.request_id === request.request_id ? updatedRequest : req));
+  
+      setRequest(updatedRequestList);
+      setUpdatedRequestStatus(updatedStatus);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -93,7 +143,6 @@ export default function DrvRequestLogs() {
             <Table>
               <thead>
                 <tr>
-                  <th className='requestlog-th' style={{ textAlign: 'center' }}>Vehicle Number</th>
                   <th className='requestlog-th' style={{ textAlign: 'center' }}>Vehicle Name</th>
                   <th className='requestlog-th' style={{ textAlign: 'center' }}>Requested by</th>
                   <th className='requestlog-th' style={{ textAlign: 'center' }}>Destination</th>
@@ -103,49 +152,76 @@ export default function DrvRequestLogs() {
               </thead>
               <TableBody>
                 {request.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((request) => (
-                  <TableRow key={request.request_id}>
-                    <TableCell style={{ textAlign: 'center' }}>{request.vehicle_number}</TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>{request.vehicle_name}</TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>{request.requested_by}</TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>{request.destination}</TableCell>
-                    <TableCell style={{ textAlign: 'center', padding: 0 }}>
-                      <div style={{
-                        backgroundColor:
-                          request.request_status === "Pending" ? '#FDC858' :
-                            request.request_status === "Approved" ? 'green' :
-                              request.request_status === "Disapproved" ? '#b21127' :
-                                request.request_status === "For Approval" ? '#025BAD' : 'inherit',
-                        color: 'white',
-                        padding: '5px 5px',
-                        borderRadius: '50px',
-                        width: '80%', // Adjust as needed
-                        margin: 'auto',
-                      }}>
-                        {request.request_status}
-                      </div>
-                    </TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>
-                      <Button variant="contained" onClick={() => handleOpenView(request)}>
-                        View Details
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={filteredRequests.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </TableContainer>
-        </Paper>
-        {/* view modal*/}
-        <Dialog open={openView} onClose={CloseView} fullWidth maxWidth="md">
+                    <TableRow key={request.request_id}>
+                      <TableCell style={{ textAlign: 'center' }}>{request.vehicle_name}</TableCell>
+                      <TableCell style={{ textAlign: 'center' }}>{request.requested_by}</TableCell>
+                      <TableCell style={{ textAlign: 'center' }}>{request.destination}</TableCell>
+                      <TableCell style={{ textAlign: 'center', padding: 0 }}>
+                        <div
+                          style={{
+                            backgroundColor:
+                              request.request_status === "Pending"
+                                ? '#FDC858'
+                                : request.request_status === "Approved"
+                                ? 'green'
+                                : request.request_status === "Disapproved"
+                                ? '#b21127'
+                                : request.request_status === "For Approval"
+                                ? '#025BAD'
+                                : request.request_status === "Accomplished"
+                                ? 'purple'
+                                : request.request_status === "Not Accomplished"
+                                ? 'brown'
+                                : 'inherit',
+                            color: 'white',
+                            padding: '5px 5px',
+                            borderRadius: '50px',
+                            width: '80%', // Adjust as needed
+                            margin: 'auto',
+                          }}
+                        >
+                          {request.request_status}
+                        </div>
+                      </TableCell>
+
+                      <TableCell style={{ textAlign: 'center' }}>
+                        <Button variant="contained" onClick={() => handleOpenView(request)}>
+                          View Details
+                        </Button>
+                        <Button variant="contained" onClick={() => handleAccomplished(request)} disabled={request.request_status !== "Approved"}>
+                             /
+                        </Button>
+                        <Button variant="contained" onClick={() => handleNotAccomplished(request)} disabled={request.request_status !== "Approved"}>
+                            X
+                        </Button>
+                      </TableCell>
+                      {/* <TableCell style={{ textAlign: 'center' }}>
+                        {request.request_status === "Approved" && (
+                          <Button variant="contained" onClick={() => handleAccomplished(request)}>
+                             Accomplished
+                          </Button>
+                        )}                         
+                      </TableCell>
+                      <TableCell>
+                          
+                      </TableCell> */}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={filteredRequests.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableContainer>
+          </Paper>
+      {/* view modal*/}
+      <Dialog open={openView} onClose={CloseView} fullWidth maxWidth="md">
           <Button onClick={CloseView} style={{ color: 'gray', position: 'absolute', top: 10, right: 0, paddingLeft: 0, paddingRight: 0 }}>
             <CloseRoundedIcon />
           </Button>
