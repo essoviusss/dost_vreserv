@@ -20,6 +20,7 @@ import EmpEditStep2 from './pages/Employee/EmpEditStep2';
 import { FormDataProvider } from './pages/Employee/FormDataContext';
 import Sidebar from './Sidebar/Sidebar';
 import DriverSidebar from './Sidebar/DriverSidebar';
+import DrvAccomplished from './pages/Driver/DrvAccomplished';
 
 function MainContent() {
   const location = useLocation();
@@ -66,6 +67,8 @@ function MainContent() {
           <Route path="/EmpSummary" element={<EmpSummary />} />
           <Route path="/DrvDashboard" element={<DrvDashboard />} />
           <Route path="/DrvRequestLogs" element={<DrvRequestLogs />} />
+          <Route path="/DrvRequestLogs" element={<DrvRequestLogs />} />
+          <Route path="/DrvAccomplished" element={<DrvAccomplished />} />
         </Routes>
       </div>
     </div>
