@@ -18,38 +18,56 @@ function EmpStep1(){
   const [drivers, setDrivers] = useState([]);
 
   //formdata
-  const [departureDate, setDepartureDate] = useState(formData.departureDate || "");
-  const [arrivalDate, setArrivalDate] = useState(formData.arrivalDate || "");
+  const [departureDate, setDepartureDate] = useState(formData.departureDate || null);
+  const [arrivalDate, setArrivalDate] = useState(formData.arrivalDate || null);
   const [selectedVehicle, setSelectedVehicle] = useState(formData.selectedVehicle || "");
   const [selectedDriver, setSelectedDriver] = useState(formData.selectedDriver || "");
   
-  useEffect(() => {
-    axios.get('http://localhost/vreserv_api/available_vehicle.php')
-      .then(response => {
-        if (Array.isArray(response.data)) {
-          setVehicles(response.data);
-        } else {
-          console.error('Unexpected API response format:', response.data);
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+  function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear(),
+        hours = '' + d.getHours(),
+        minutes = '' + d.getMinutes(),
+        seconds = '' + d.getSeconds();
   
-  useEffect(() => {
-    axios.get('http://localhost/vreserv_api/available_driver.php')
-      .then(response => {
-        if (Array.isArray(response.data)) {
-          setDrivers(response.data);
-        } else {
-          console.error('Unexpected API response format:', response.data);
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+    if (hours.length < 2) 
+        hours = '0' + hours;
+    if (minutes.length < 2) 
+        minutes = '0' + minutes;
+    if (seconds.length < 2) 
+        seconds = '0' + seconds;
+  
+    return [year, month, day].join('-') + ' ' + [hours, minutes, seconds].join(':');
+  }
+  
+
+  useEffect(() =>{
+    const fetchData = async () => {
+      try{
+        const url = "http://localhost/vreserv_api/pms_condition.php";
+        let fData = new FormData();
+        fData.append("selectedDate1", departureDate);
+        fData.append("selectedDate2", arrivalDate);
+        
+        const response = await axios.post(url, fData);
+        console.log(response.data.data.vehicles);
+        console.log(response.data.data.drivers);
+        if(Array.isArray(response.data.data.vehicles)){
+          setVehicles(response.data.data.vehicles);
+          setDrivers(response.data.data.drivers);
         }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+      }catch(e){
+        alert(e);
+      }
+    }
+    fetchData();
+  },[departureDate, arrivalDate, vehicles])
   
 
   const nextButton = () => {
@@ -78,39 +96,49 @@ function EmpStep1(){
         <div className="item3-step1">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <StaticDateTimePicker
+              value={departureDate}
               className="hidePickerButtons"
               orientation="landscape"
-              onChange={(date) => setDepartureDate(date.toISOString())}
+              onChange={(date) => {
+                const formattedDate = formatDate(date);
+                setDepartureDate(formattedDate);
+              }}
+              
+
             />
           </LocalizationProvider>
         </div>
         <div className="item4-step1">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <StaticDateTimePicker
+              value={arrivalDate}
               className="hidePickerButtons"
               orientation="landscape"
-              onChange={(date) => setArrivalDate(date.toISOString())}
+              onChange={(date) => {
+                const formattedDate = formatDate(date);
+                setArrivalDate(formattedDate);
+              }}
             />
           </LocalizationProvider>
         </div>
         <div className="item5-step1">AVAILABLE VEHICLE</div>
         <div className="item6-step1">AVAILABLE DRIVER</div>
         <div className="item7-step1">
-          <select value={selectedVehicle} onChange={(e) => setSelectedVehicle(e.target.value)}>
-            <option>Select Vehicle</option>
-            {vehicles.map((vehicle) => (
-              <option key={vehicle.vehicle_id} value={vehicle.vehicle_name}>
-                {vehicle.vehicle_name}
-              </option>
-            ))}
-          </select>
+        <select value={selectedVehicle} onChange={(e) => setSelectedVehicle(e.target.value)}>
+          <option>Select Vehicle</option>
+          {vehicles.map((vehicle) => (
+            <option key={vehicle} value={vehicle}>
+              {vehicle}
+            </option>
+          ))}
+        </select>
         </div>
         <div className="item8-step1">
           <select value={selectedDriver} onChange={(e) => setSelectedDriver(e.target.value)}>
             <option>Select Driver</option>
             {drivers.map((driver) => (
-              <option key={driver.driver_id} value={driver.driver_name}>
-                {driver.driver_name}
+              <option value={driver}>
+                {driver}
               </option>
             ))}
           </select>

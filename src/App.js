@@ -21,10 +21,32 @@ import { FormDataProvider } from './pages/Employee/FormDataContext';
 import Sidebar from './Sidebar/Sidebar';
 import DriverSidebar from './Sidebar/DriverSidebar';
 import DrvAccomplished from './pages/Driver/DrvAccomplished';
+import useAuth from './hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
+import { useEffect } from 'react';
 
 function MainContent() {
   const location = useLocation();
   const userRole = localStorage.getItem('userRole');
+  const navigate = useNavigate();
+  const isLoggedIn = useAuth();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const currentTime = Math.floor(Date.now() / 1000); // get the current time
+      if (currentTime > decodedToken.exp) {
+        localStorage.removeItem('token');
+        alert('Token expired, please login again');
+        navigate('/');
+      }
+    } else if (!isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
 
   if (location.pathname === '/') {
     return <Login />;
