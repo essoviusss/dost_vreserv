@@ -10,6 +10,7 @@ import Header from "../../header/header";
 import '../GlobalCSS/content.css';
 import '../Employee/EmpStep4.js';
 import Footer from "../Employee/EmpFooter.js";
+import { BASE_URL } from "../../constants/api_url";
 
 function EmpStep3() {
     const { formData } = useFormData();
@@ -19,7 +20,7 @@ function EmpStep3() {
 
     function submitForm() {
         const email = localStorage.getItem("email");
-        const url = 'http://localhost/vreserv_api/submit_request.php';
+        const url = `${BASE_URL}/submit_request.php`;
         let fData = new FormData();
         fData.append('UID', UID);
         fData.append('email', email);

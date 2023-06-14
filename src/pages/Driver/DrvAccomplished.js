@@ -16,6 +16,7 @@ import Paper from '@mui/material/Paper';
 import '../Employee/components/EmpRequestLogs.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import { BASE_URL } from '../../constants/api_url';
 
 export default function DrvAccomplished(){
   //font
@@ -61,7 +62,7 @@ export default function DrvAccomplished(){
   //read
   useEffect(() => {
     const fetchData = async () => {
-      const url = "http://localhost/vreserv_api/read_drv_accomplished.php";
+      const url = `${BASE_URL}/read_drv_accomplished.php`;
       const userId = localStorage.getItem("userId");
 
       let fData = new FormData();

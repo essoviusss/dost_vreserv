@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@mui/material';
 import Paper from '@mui/material/Paper';
+import { BASE_URL } from "../../constants/api_url";
 
 export default function DrvDashboard() {
   const [data, setData] = useState([]);
@@ -17,7 +18,7 @@ export default function DrvDashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = "http://localhost/vreserv_api/accomplished_request.php";
+        const url = `${BASE_URL}/accomplished_request.php`;
         const userId = localStorage.getItem("userId");
         let fData = new FormData();
         fData.append("user_id", userId);
@@ -46,7 +47,7 @@ export default function DrvDashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try{
-        const url = "http://localhost/vreserv_api/drvdash_request.php";
+        const url = `${BASE_URL}/drvdash_request.php`;
         const user_id = localStorage.getItem('userId');
 
         let fData = new FormData();
@@ -81,7 +82,7 @@ export default function DrvDashboard() {
     const fetchData = async () => {
         try {
         const userId = localStorage.getItem("userId");
-        const url = "http://localhost/vreserv_api/read_drv_request.php";
+        const url = `${BASE_URL}/read_drv_request.php`;
 
         let formData = new FormData();
         formData.append('user_id', userId);
