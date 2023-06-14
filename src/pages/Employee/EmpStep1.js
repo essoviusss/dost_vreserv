@@ -9,6 +9,7 @@ import '../Employee/components/EmpStep1.css';
 import Footer from "../Employee/EmpFooter.js";
 import Header from "../../header/header";
 import '../GlobalCSS/content.css';
+import { BASE_URL } from "../../constants/api_url";
 
 function EmpStep1(){
   const { formData, updateFormData } = useFormData();
@@ -50,7 +51,7 @@ function EmpStep1(){
   useEffect(() =>{
     const fetchData = async () => {
       try{
-        const url = "http://localhost/vreserv_api/pms_condition.php";
+        const url = `${BASE_URL}/pms_condition.php`;
         let fData = new FormData();
         fData.append("selectedDate1", departureDate);
         fData.append("selectedDate2", arrivalDate);

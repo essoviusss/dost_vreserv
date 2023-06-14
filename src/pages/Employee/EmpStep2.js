@@ -8,6 +8,7 @@ import '../Employee/components/EmpStep2.css';
 import Header from "../../header/header";
 import Footer from "../Employee/EmpFooter.js";
 import '../GlobalCSS/content.css';
+import { API_KEY } from "../../constants/maps_api";
 
 const containerStyle = {
   width: '100%',
@@ -19,7 +20,7 @@ const defaultCenter = {
   lng: 120.315877,
 };
 
-const API_KEY = 'AIzaSyAfwnnpqgJEIWC8xyJWHJJzc5t-JndFKjg';
+
 
 function EmpStep2() {
   const { formData, updateFormData } = useFormData();

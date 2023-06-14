@@ -17,6 +17,7 @@ import Paper from '@mui/material/Paper';
 import '../Employee/components/EmpRequestLogs.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import { BASE_URL } from '../../constants/api_url';
 
 export default function EmpRequestLogs(){
   //font
@@ -63,7 +64,7 @@ export default function EmpRequestLogs(){
   //read
   useEffect(() => {
     axios
-      .get("http://localhost/vreserv_api/read_request.php")
+      .get(`${BASE_URL}/read_request.php`)
       .then((response) => {
         if(Array.isArray(response.data)){
           setRequest(response.data);

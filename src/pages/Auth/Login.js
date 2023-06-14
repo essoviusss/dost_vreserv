@@ -22,6 +22,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { BASE_URL } from "../../constants/api_url";
 
 
 export default function Login(){
@@ -114,7 +115,7 @@ export default function Login(){
   
 
     const signIn = async () => {
-        const url = "http://localhost/vreserv_api/login.php";
+        const url = `${BASE_URL}/login.php`;
         if (!validateSelect()) {
           return;
         }
