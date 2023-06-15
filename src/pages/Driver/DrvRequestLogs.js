@@ -6,11 +6,13 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
 import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { generateTripTicket } from '../../utils/pdfUtils';
+import DialogTitle from '@mui/material/DialogTitle';
 import { BASE_URL } from '../../constants/api_url';
 
 export default function DrvRequestLogs() {
@@ -24,21 +26,54 @@ export default function DrvRequestLogs() {
   //defaultValue
   const [selectedRequest, setSelectedRequest] = useState({});
   const [request, setRequest] = useState([]);
-  const [updatedRequestStatus, setUpdatedRequestStatus] = useState("");
 
 
   //modal
   const [openView, setOpenView] = React.useState(false);
+  const [openAccomplished, setOpenAccomplished] = React.useState(false);
+  const [openNotAccomplished, setOpenNotAccomplished] = React.useState(false);
+  const [editRequestStatus, setEditRequestStatus] = useState("");
+
+
 
   //dialog
+
+
+  const CloseView = () => {
+    setOpenView(false);
+  };
+
   const handleOpenView = (request) => {
     setSelectedRequest(request);
     setOpenView(true);
   };
 
-  const CloseView = () => {
-    setOpenView(false);
+  const handleAccomplished= (request) => {
+    setSelectedRequest(request);
+    setEditRequestStatus(request.request_status);
+    setOpenAccomplished(true);
+  }
+
+  const handleNotAccomplished= (request) => {
+    setSelectedRequest(request);
+    setEditRequestStatus(request.request_status);
+    setOpenNotAccomplished(true);
+  }
+
+  const CloseAccomplished = () => {
+    setOpenAccomplished(false);
   };
+
+  const CloseNotAccomplished = () => {
+    setOpenNotAccomplished(false);
+  };
+
+  const CloseEdit = () => {
+    setOpenAccomplished(false);
+    setOpenNotAccomplished(false);
+  };
+  
+  
 
   //table
   const [page, setPage] = useState(0);
@@ -86,52 +121,42 @@ export default function DrvRequestLogs() {
       console.log('Error generating PDF:', error);
     }
   };
-  const handleAccomplished = async (request) => {
-    try {
-      // Update the request status to "Approved" in the backend
-      const url = `${BASE_URL}/update_status.php`;
-      const updatedStatus = "Accomplished";
-  
-      const formData = new FormData();
-      formData.append("request_id", request.request_id);
-      formData.append("request_status", updatedStatus);
-  
-      await axios.post(url, formData);
-  
-      // Update the request status in the frontend
-      const updatedRequest = { ...request, request_status: updatedStatus };
-      const updatedRequestList = request.map((req) => (req.request_id === request.request_id ? updatedRequest : req));
-  
-      setRequest(updatedRequestList);
-      setUpdatedRequestStatus(updatedStatus);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
-  const handleNotAccomplished = async (request) => {
-    try {
-      // Update the request status to "Approved" in the backend
-      const url = `${BASE_URL}/update_status.php`;
-      const updatedStatus = "Not Accomplished";
-  
-      const formData = new FormData();
-      formData.append("request_id", request.request_id);
-      formData.append("request_status", updatedStatus);
-  
-      await axios.post(url, formData);
-  
-      // Update the request status in the frontend
-      const updatedRequest = { ...request, request_status: updatedStatus };
-      const updatedRequestList = request.map((req) => (req.request_id === request.request_id ? updatedRequest : req));
-  
-      setRequest(updatedRequestList);
-      setUpdatedRequestStatus(updatedStatus);
-    } catch (error) {
-      console.error("Error:", error);
+  //accomplished
+  async function handleUpdateAccomplished() {
+    const url = `${BASE_URL}/update_status.php`;
+    
+    let fData = new FormData();
+    fData.append("request_id", selectedRequest.request_id);
+    fData.append("request_status", "Accomplished");
+
+    const response = await axios.post(url, fData);
+    if (response.data.message === "Success") {
+      alert("Accomplished");
+    } else {
+      alert("Madi");
     }
-  };
+    CloseEdit();
+  }
+
+    //not accomplished
+    async function handleUpdateNotAccomplished() {
+      const url = `${BASE_URL}/update_status.php`;
+      
+      let fData = new FormData();
+      fData.append("request_id", selectedRequest.request_id);
+      fData.append("request_status", "Not Accomplished");
   
+      const response = await axios.post(url, fData);
+      if (response.data.message === "Success") {
+        alert("Not Accomplished");
+      } else {
+        alert("Madi");
+      }
+      CloseEdit();
+    }
+
+
   
 
   return (
@@ -167,6 +192,8 @@ export default function DrvRequestLogs() {
                                 ? 'green'
                                 : request.request_status === "Disapproved"
                                 ? '#b21127'
+                                : request.request_status === "Cancelled"
+                                ? '#6e6e6e'
                                 : request.request_status === "For Approval"
                                 ? '#025BAD'
                                 : request.request_status === "Accomplished"
@@ -189,10 +216,15 @@ export default function DrvRequestLogs() {
                         <Button variant="contained" onClick={() => handleOpenView(request)}>
                           View Details
                         </Button>
-                        <Button variant="contained" onClick={() => handleAccomplished(request)} disabled={request.request_status !== "Approved"}>
-                             /
+
+                        {/* <Button variant="contained" disabled={request.request_status !== "Approved"} >
+                          /
+                        </Button> */}
+                        <Button variant="contained" onClick={() => handleAccomplished(request)}  disabled={request.request_status !== "Approved"}>
+                          /
                         </Button>
-                        <Button variant="contained" onClick={() => handleNotAccomplished(request)} disabled={request.request_status !== "Approved"}>
+
+                        <Button variant="contained" onClick={() => handleNotAccomplished(request)}  disabled={request.request_status !== "Approved"}>
                             X
                         </Button>
                       </TableCell>
@@ -221,6 +253,7 @@ export default function DrvRequestLogs() {
               />
             </TableContainer>
           </Paper>
+
       {/* view modal*/}
       <Dialog open={openView} onClose={CloseView} fullWidth maxWidth="md">
           <Button onClick={CloseView} style={{ color: 'gray', position: 'absolute', top: 10, right: 0, paddingLeft: 0, paddingRight: 0 }}>
@@ -349,6 +382,43 @@ export default function DrvRequestLogs() {
             </div>
           </DialogContent>
         </Dialog>
+      
+      {/* Accomplished modal */}
+
+      <Dialog open={openAccomplished} onClose={CloseAccomplished} fullWidth maxWidth="sm">
+      <DialogTitle className="dialog-title">
+        {/* <img className="edit-logo" src="/images/edit_logo.png" /> */}
+        <div className="dialog-title-content">
+          <h1>Confirmation</h1>
+          <p>Are you sure you want to approve this request?</p>         
+        </div>
+      </DialogTitle>
+      <hr className="dtitle-hr" /> 
+        <DialogActions>
+          <Button onClick={CloseAccomplished} style={{ color: '#025BAD', fontFamily: 'Poppins' }}>Cancel</Button>
+          <Button onClick={handleUpdateAccomplished} style={{ color: '#025BAD', fontFamily: 'Poppins' }} >Confirm</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Accomplished modal */}
+
+      <Dialog open={openNotAccomplished} onClose={CloseNotAccomplished} fullWidth maxWidth="sm">
+      <DialogTitle className="dialog-title">
+        {/* <img className="edit-logo" src="/images/edit_logo.png" /> */}
+        <div className="dialog-title-content">
+          <h1>Confirmation</h1>
+          <p>Not Accomplished?</p>         
+        </div>
+      </DialogTitle>
+      <hr className="dtitle-hr" /> 
+        <DialogActions>
+          <Button onClick={CloseNotAccomplished} style={{ color: '#025BAD', fontFamily: 'Poppins' }}>Cancel</Button>
+          <Button onClick={handleUpdateNotAccomplished} style={{ color: '#025BAD', fontFamily: 'Poppins' }} >Confirm</Button>
+        </DialogActions>
+      </Dialog>
+
+      
+
       </div>
     </ThemeProvider>
   );
