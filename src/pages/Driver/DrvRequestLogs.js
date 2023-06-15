@@ -375,7 +375,7 @@ export default function DrvRequestLogs() {
                   </div>
                 </div>
                 <div className="div11-drvreq">
-                  <Button onClick={handleGenerateTripTicket} variant="contained" color="primary" style={{ textTransform: 'none', backgroundColor: '#025BAD' }}>
+                  <Button onClick={handleGenerateTripTicket} variant="contained" color="primary" disabled={selectedRequest.request_status !== "Approved"} style={{ textTransform: 'none', backgroundColor: '#025BAD' }}>
                     Generate Trip Ticket
                   </Button>
                 </div>
