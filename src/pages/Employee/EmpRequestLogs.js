@@ -145,7 +145,6 @@ export default function EmpRequestLogs(){
       </Button>
         <DialogContent>
           <DialogContentText>
-            {/* To add a new employee account, please enter the details in the designated input field. */}
           </DialogContentText>
           <div className="div-empreq">
               <div className="div1-empreq">
@@ -230,11 +229,28 @@ export default function EmpRequestLogs(){
                         <p className="header-label-empreq">Name of Passenger/s:</p>
                       </td>
                       <td>
-                      <p className="empreq-details">
-                      {selectedRequest.passenger_names && Array.isArray(selectedRequest.passenger_names) && selectedRequest.passenger_names.map((passenger, index) => (
-                        <div key={index}>{passenger}</div>
-                      ))}
-                      </p>
+                        <table>
+                          <tbody>
+                            {selectedRequest.passenger_names &&
+                              Array.isArray(selectedRequest.passenger_names) &&
+                              selectedRequest.passenger_names.map((passenger, index) => {
+                                const passengerNumber = index + 1;
+                                if (index % 2 === 0) {
+                                  return (
+                                    <tr key={index}>
+                                      <td> <p className="empreq-details"> ({passengerNumber}) {passenger} </p> </td>
+                                      {index + 1 < selectedRequest.passenger_names.length && (
+                                        <td>
+                                          <p className="empreq-details"> ({passengerNumber + 1}) {selectedRequest.passenger_names[index + 1]} </p>
+                                        </td>
+                                      )}
+                                    </tr>
+                                  );
+                                }
+                                return null;
+                              })}
+                          </tbody>
+                        </table>
                       </td>
                     </tr>
                     <tr>

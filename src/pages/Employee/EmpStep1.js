@@ -10,6 +10,7 @@ import Footer from "../Employee/EmpFooter.js";
 import Header from "../../header/header";
 import '../GlobalCSS/content.css';
 import { BASE_URL } from "../../constants/api_url";
+import dayjs from "dayjs";
 
 function EmpStep1(){
   const { formData, updateFormData } = useFormData();
@@ -97,7 +98,7 @@ function EmpStep1(){
         <div className="item3-step1">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <StaticDateTimePicker
-              value={departureDate}
+              value={dayjs(departureDate)}
               className="hidePickerButtons"
               orientation="landscape"
               onChange={(date) => {
@@ -112,7 +113,7 @@ function EmpStep1(){
         <div className="item4-step1">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <StaticDateTimePicker
-              value={arrivalDate}
+              value={dayjs(arrivalDate)}
               className="hidePickerButtons"
               orientation="landscape"
               onChange={(date) => {
