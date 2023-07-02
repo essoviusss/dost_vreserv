@@ -4,8 +4,7 @@ import DriverHeader from "../../header/DriverHeader";
 import DonutChart from "react-donut-chart";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@mui/material';
-import Paper from '@mui/material/Paper';
+import { Table, TableBody, TableCell, TableRow } from '@mui/material';
 import { BASE_URL } from "../../constants/api_url";
 
 //material ui
@@ -14,21 +13,33 @@ import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowRightAltRoundedIcon from '@mui/icons-material/ArrowRightAltRounded';
 
+import Calendar from "./Calendar";
+
 export default function DrvDashboard() {
+  const [value, onChange] = useState(new Date());
   const [data, setData] = useState([]);
   const [approved, setApproved] = useState(0);
   const [pending, setPending] = useState(0);
 
   const [request, setRequest] = useState([]);
+  const [accomplishedReq, setAccomplishedReq] = useState(0);
+  const [notAccomplishedReq, setNotAccomplishedReq] = useState(0);
+  const [accomplishedReqPercentage, setAccomplishedReqPercentage] = useState(0);
+  const [notAccomplishedReqPercentage, setNotAccomplishedReqPercentage] = useState(0);
+
+  const [currentMonth, setCurrentMonth] = useState("");
+
 
   //table
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  // eslint-disable-next-line
   const handleChangePage = (event, newPage) => {
       setPage(newPage);
   };
 
+  // eslint-disable-next-line
   const handleChangeRowsPerPage = (event) => {
       setRowsPerPage(parseInt(event.target.value, 10));
       setPage(0);
@@ -44,6 +55,10 @@ export default function DrvDashboard() {
         fData.append("user_id", userId);
 
         const response = await axios.post(url, fData);
+        setAccomplishedReq(response.data.data.accomplished_requests);
+        setNotAccomplishedReq(response.data.data.not_accomplished_requests);
+        setAccomplishedReqPercentage(response.data.data.accomplished_percentage);
+        setNotAccomplishedReqPercentage(response.data.data.not_accomplished_percentage);
         const { data } = response.data;
         setData([
           {
@@ -55,6 +70,7 @@ export default function DrvDashboard() {
             label: "Not Accomplished",
           },
         ]);
+        
       } catch (e) {
         alert(e);
       }
@@ -107,6 +123,12 @@ export default function DrvDashboard() {
     fetchData();
     }, []);
 
+  useEffect(() => {
+    const currentDate = new Date();
+    const month = currentDate.toLocaleString('default', { month: 'long' });
+    setCurrentMonth(month);
+  }, []);
+
   return (
     <div className="drv-dashboard-wrapper">
         <DriverHeader />
@@ -131,15 +153,15 @@ export default function DrvDashboard() {
               <div className="donut-title">Scheduled Travels</div>
               <div className="donut-accomplished">
                 <CircleRoundedIcon style={{ fontSize: 20, color: '#025BAD' }} /> &nbsp;
-                <div className="percentage">25%</div> &nbsp;
+                <div className="percentage">{accomplishedReqPercentage}%</div> &nbsp;
                 <div className="per-label">Accomplished</div>
-                <div className="count-label">(31 Travels)</div>
+                <div className="count-label">({accomplishedReq} Travels)</div>
               </div>
               <div className="donut-unaccomplished">
               <CircleRoundedIcon style={{ fontSize: 20, color: '#D9D9D9' }} />  &nbsp;
-                <div className="percentage">50%</div> &nbsp;
-                <div className="per-label">Unccomplished</div>
-                <div className="count-label">(15 Travels)</div>
+                <div className="percentage">{notAccomplishedReqPercentage}%</div> &nbsp;
+                <div className="per-label">Not accomplished</div>
+                <div className="count-label">({notAccomplishedReq} Travels)</div>
               </div>
             </div>
           </div>
@@ -153,7 +175,7 @@ export default function DrvDashboard() {
                   <div className="status-dashlabel">Approved</div>
                 </div>
                 <div className="status-dashcount-container">
-                  <div className="status-dashcount">50</div>
+                  <div className="status-dashcount">{approved}</div>
                   <div className="status-dashreq">Requests</div>
                 </div>
               </div>
@@ -167,7 +189,7 @@ export default function DrvDashboard() {
                   <div className="status-dashlabel">Pending</div>
                 </div>
                 <div className="status-dashcount-container">
-                  <div className="status-dashcount">50</div>
+                  <div className="status-dashcount">{pending}</div>
                   <div className="status-dashreq">Requests</div>
                 </div>
               </div>
@@ -184,7 +206,7 @@ export default function DrvDashboard() {
             </div>
             <div className="dash-driver2">
               <div className="driver2-row1">
-                Month of June
+                Month of {currentMonth}
               </div>
               <div className="driver2-row2">
                 <table>
@@ -271,7 +293,9 @@ export default function DrvDashboard() {
               </div>
             </div>
         
-          <div className="drv-child4">calendar</div>
+          <div className="drv-child4">
+            <Calendar/>
+          </div>
         </div>
     </div>
   );

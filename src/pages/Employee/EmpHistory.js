@@ -6,9 +6,12 @@ import axios from "axios";
 
 //material ui
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import '../Employee/components/EmpRequestLogs.css';
@@ -16,7 +19,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { BASE_URL } from '../../constants/api_url';
 
-export default function EmpRequestLogs(){
+export default function EmpHistory(){
   //font
   const theme = createTheme({
     typography: {
@@ -61,7 +64,7 @@ export default function EmpRequestLogs(){
   //read
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/read_request.php`)
+      .get(`${BASE_URL}/read_travelHistory.php`)
       .then((response) => {
         if(Array.isArray(response.data)){
           setRequest(response.data);
@@ -95,14 +98,12 @@ export default function EmpRequestLogs(){
                     <TableCell style={{ textAlign: 'center', wordBreak: 'break-word', maxWidth: '140px' }}>{request.vehicle_name}</TableCell>
                     <TableCell style={{ textAlign: 'center', wordBreak: 'break-word', maxWidth: '140px' }}>{request.driver_name}</TableCell>
                     <TableCell style={{ textAlign: 'center', wordBreak: 'break-word', maxWidth: '180px' }}>{request.destination}</TableCell>
-                    <TableCell style={{ textAlign: 'center', padding: 0 }}>   
+                    <TableCell style={{ textAlign: 'center', padding: 0 }}>
                       <div style={{ 
                         backgroundColor: 
-                          request.request_status === "Pending" ? '#FDC858' :
-                          request.request_status === "Approved" ? 'green' :
+                          request.request_status === "Accomplished" ? 'green' :
                           request.request_status === "Disapproved" ? '#b21127' :
-                          request.request_status === "Cancelled" ? '#6e6e6e' :
-                          request.request_status === "For Approval" ? '#025BAD' : 'inherit', 
+                          request.request_status === "Cancelled" ? '#6e6e6e' : 'inherit',
                         color: 'white',
                         padding: '5px 5px',
                         borderRadius: '50px',
@@ -146,7 +147,7 @@ export default function EmpRequestLogs(){
           <div className="div-empreq">
               <div className="div1-empreq">
                 <div className="div1-empreq">
-                  <img className="summary-logo" src="/images/summary_logo.png" alt=''/>
+                  <img className="summary-logo" src="/images/summary_logo.png"/>
                 </div>
               </div>
               <div className="div2-empreq">
@@ -189,7 +190,7 @@ export default function EmpRequestLogs(){
                       </td>
                       <td>
                       <p className="empreq-details">
-                        {selectedRequest.arrival_time}</p>
+                        {selectedRequest.arrival_time}E</p>
                       </td>
                     </tr>
                     <tr>

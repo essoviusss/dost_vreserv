@@ -5,12 +5,9 @@ import axios from "axios";
 
 //material ui
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import '../Employee/components/EmpRequestLogs.css';
@@ -155,7 +152,7 @@ export default function DrvAccomplished(){
           <div className="div-drvreq">
               <div className="div1-drvreq">
                 <div className="div1-drvreq">
-                  <img className="summary-logo" src="/images/summary_logo.png"/>
+                  <img className="summary-logo" src="/images/summary_logo.png" alt=''/>
                 </div>
               </div>
               <div className="div2-drvreq">

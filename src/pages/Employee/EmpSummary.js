@@ -14,7 +14,7 @@ export default function EmpSummary(){
 
                 <div>
                     <div>
-                        <img></img>
+                        
                     </div>
                     <div>
                         <label>A1M 904 HILUX</label>

@@ -68,6 +68,9 @@ const Sidebar = () => {
             <NavLink exact to="/EmpRequestLogs" activeClassName="activeClicked">
               <CDBSidebarMenuItem style={location.pathname === '/EmpRequestLogs' ? { backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px' } : { borderRadius: '10px', padding: '5px' }} className={location.pathname === '/EmpRequestLogs' ? 'text-primary' : 'text-gray'} icon="user" iconClassName={`fa-user ${location.pathname === '/EmpRequestLogs' ? 'active-icon' : ''}`}>Request Logs</CDBSidebarMenuItem>
             </NavLink>
+            <NavLink exact to="/EmpHistory" activeClassName="activeClicked">
+              <CDBSidebarMenuItem style={location.pathname === '/EmpHistory' ? { backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px' } : { borderRadius: '10px', padding: '5px' }} className={location.pathname === '/EmpHistory' ? 'text-primary' : 'text-gray'} icon="user" iconClassName={`fa-user ${location.pathname === '/EmpHistory' ? 'active-icon' : ''}`}>History</CDBSidebarMenuItem>
+            </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
   

@@ -25,6 +25,7 @@ import useAuth from './hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { useEffect } from 'react';
+import EmpHistory from './pages/Employee/EmpHistory';
 
 function MainContent() {
   const location = useLocation();
@@ -86,6 +87,7 @@ function MainContent() {
           <Route path="/EmpRequestLogs" element={<EmpRequestLogs />} />
           <Route path="/EmpEditStep1" element={<EmpEditStep1 />} />
           <Route path="/EmpEditStep2" element={<EmpEditStep2 />} />
+          <Route path="/EmpHistory" element={<EmpHistory />} />
           <Route path="/EmpSummary" element={<EmpSummary />} />
           <Route path="/DrvDashboard" element={<DrvDashboard />} />
           <Route path="/DrvRequestLogs" element={<DrvRequestLogs />} />

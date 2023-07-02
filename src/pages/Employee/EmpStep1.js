@@ -58,8 +58,6 @@ function EmpStep1(){
         fData.append("selectedDate2", arrivalDate);
         
         const response = await axios.post(url, fData);
-        console.log(response.data.data.vehicles);
-        console.log(response.data.data.drivers);
         if(Array.isArray(response.data.data.vehicles)){
           setVehicles(response.data.data.vehicles);
           setDrivers(response.data.data.drivers);

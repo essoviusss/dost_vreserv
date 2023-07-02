@@ -52,7 +52,7 @@ function EmpStep3() {
             <div className="div-summary">
               <div className="div1-container">
                 <div className="div1-summary">
-                  <img className="summary-logo" src="/images/summary_logo.png"/>
+                  <img className="summary-logo" src="/images/summary_logo.png" alt=""/>
                 </div>
               </div>
               <div className="div2-summary">
@@ -65,7 +65,7 @@ function EmpStep3() {
               </div>
               <div className="div4-summary">
                 <div class="edit-button-container">
-                  <button className="edit-button" onClick={() => navigate(-1)}>Edit</button>
+                  <button className="edit-button" onClick={() => navigate(-2)}>Edit</button>
                 </div>
               </div>
               <div className="div5-summary">
