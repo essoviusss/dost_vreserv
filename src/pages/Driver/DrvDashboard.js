@@ -15,7 +15,10 @@ import ArrowRightAltRoundedIcon from '@mui/icons-material/ArrowRightAltRounded';
 
 import Calendar from "./Calendar";
 
+import { useNavigate } from "react-router-dom";
+
 export default function DrvDashboard() {
+  const navigate = useNavigate();
   const [value, onChange] = useState(new Date());
   const [data, setData] = useState([]);
   const [approved, setApproved] = useState(0);
@@ -129,6 +132,9 @@ export default function DrvDashboard() {
     setCurrentMonth(month);
   }, []);
 
+  const viewAll = () => {
+    navigate('/DrvRequestLogs');
+  }
   return (
     <div className="drv-dashboard-wrapper">
         <DriverHeader />
@@ -236,7 +242,7 @@ export default function DrvDashboard() {
             Upcoming Travels
           </div>
           <div className="table-headerdash2">
-            <button className="view-all-button">
+            <button onClick={viewAll} className="view-all-button">
               View all <ArrowRightAltRoundedIcon />
             </button>
           </div>

@@ -1,36 +1,100 @@
-import React, { useState } from 'react';
-import './components/Calendar.css'
+import React, { useEffect, useState } from 'react';
+import './components/Calendar.css';
+import { BASE_URL } from '../../constants/api_url';
+import axios from 'axios';
 
 const Calendar = () => {
-  const [year, setYear] = useState(2023);
-  const [month, setMonth] = useState(6);
-  const [markedDates, setMarkedDates] = useState(['2023-06-28', '2023-06-29']);
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [markedDates, setMarkedDates] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = `${BASE_URL}/read_drv_request.php`;
+        const userId = localStorage.getItem('userId');
+  
+        let formData = new FormData();
+        formData.append('user_id', userId);
+  
+        const response = await axios.post(url, formData);
+        if (Array.isArray(response.data.dateRange)) {
+          const groupedDates = response.data.data.reduce((acc, obj) => {
+            const dates = obj.date_range.split(',').map(date => date.trim());
+            acc.push({
+              dates,
+              request_status: obj.request_status
+            });
+            return acc;
+          }, []);
+          console.log(groupedDates);
+          setMarkedDates(groupedDates);
+        }
+      } catch (e) {
+        alert(e);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleNextMonth = () => {
+    if (month === 12) {
+      setYear(year + 1);
+      setMonth(1);
+    } else {
+      setMonth(month + 1);
+    }
+  };
+
+  const handlePreviousMonth = () => {
+    if (month === 1) {
+      setYear(year - 1);
+      setMonth(12);
+    } else {
+      setMonth(month - 1);
+    }
+  };
 
   const renderCalendar = () => {
     const daysInMonth = new Date(year, month, 0).getDate();
     const calendar = [];
-
+  
     for (let i = 1; i <= daysInMonth; i++) {
       const date = `${year}-${month.toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
-      const isMarked = markedDates.includes(date);
-      const cellStyle = isMarked ? { backgroundColor: 'green' } : {};
-
+      const markedDateObj = markedDates.find(obj => obj.dates.includes(date));
+  
+      let cellStyle = {};
+      if (markedDateObj) {
+        if (markedDateObj.request_status === 'Pending') {
+          cellStyle.backgroundColor = 'yellow';
+        } else if (markedDateObj.request_status === 'Approved') {
+          cellStyle.backgroundColor = 'green';
+        } else if (markedDateObj.request_status === 'For Approval'){
+          cellStyle.backgroundColor = 'blue';
+        }
+      }
+  
       calendar.push(
         <div key={i} style={cellStyle} className="calendar-cell">
           {i}
         </div>
       );
     }
-
+  
     return calendar;
+  };  
+
+  const getMonthName = (month) => {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return monthNames[month - 1];
   };
 
   return (
     <div className="calendar">
       <div className="calendar-header">
-        <button onClick={() => setMonth(month - 1)}>&lt;</button>
-        <h2>{`${year}-${month.toString().padStart(2, '0')}`}</h2>
-        <button onClick={() => setMonth(month + 1)}>&gt;</button>
+        <button onClick={handlePreviousMonth}>&lt;</button>
+        <h2>{`${getMonthName(month)} ${year}`}</h2>
+        <button onClick={handleNextMonth}>&gt;</button>
       </div>
       <div className="calendar-weekdays">
         <div>Sun</div>
