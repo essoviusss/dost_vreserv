@@ -138,12 +138,15 @@ export default function Login(){
           const jwtToken = await response.data.token;
           const userRole = await response.data.role.trim();
           const userId = await response.data.userId;
+          const empName = await response.data.empName;
       
           if (userRole === "Employee" && role === "Employee") {
             alert("Login Successful");
             localStorage.setItem("token", jwtToken);
             localStorage.setItem("userRole", userRole);
             localStorage.setItem("email", email);
+            localStorage.setItem("empName", empName);
+            console.log(empName);
             navigate("/EmpDashboard", { replace: true });
         } else if (userRole === "Driver" && role === "Driver") {
             alert("Login Successful");

@@ -37,6 +37,8 @@ function EmpStep2() {
   const [passengerNames, setPassengerNames] = useState(formData.passengerNames || []);
   const [requestedBy, setRequestedBy] = useState(formData.requestedBy || []);
 
+  const empName = localStorage.getItem("empName");
+
   const handleNumPassengersChange = (e) => {
     const num = parseInt(e.target.value, 10);
     if (isNaN(num) || num < 0) {
@@ -163,7 +165,7 @@ function EmpStep2() {
           <div className="div10">
             <input type="text" 
               placeholder="Input requestor's name"
-              value={requestedBy} 
+              value={empName} 
               onChange={(e) => setRequestedBy(e.target.value)}
             />
           </div>
