@@ -13,7 +13,9 @@ import Paper from '@mui/material/Paper';
 import '../Employee/components/EmpRequestLogs.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import RemoveRedEyeRoundedIcon from '@mui/icons-material/RemoveRedEyeRounded';
 import { BASE_URL } from '../../constants/api_url';
+import dayjs from "dayjs";
 
 export default function DrvAccomplished(){
   //font
@@ -109,8 +111,9 @@ export default function DrvAccomplished(){
                             request.request_status === "Pending" ? '#FDC858' :
                             request.request_status === "Approved" ? 'green' :
                             request.request_status === "Disapproved" ? '#b21127' :
-                            request.request_status === "Accomplished" ? 'purple' :
-                            request.request_status === "Not Accomplished" ? 'brown' :
+                            request.request_status === "Accomplished" ? '#f26419' :
+                            request.request_status === "Not Accomplished" ? '#6e6e6e' :
+                            request.request_status === "Cancelled" ? '#6e6e6e' :
                             request.request_status === "For Approval" ? '#025BAD' : 'inherit', 
                           color: 'white',
                           padding: '5px 5px',
@@ -122,8 +125,12 @@ export default function DrvAccomplished(){
                         </div>
                       </TableCell>
                       <TableCell style={{ textAlign: 'center' }}>
-                        <Button variant="contained" onClick={() => handleOpenView(request)}>
-                          View Details
+                        <Button
+                          variant="contained"
+                          onClick={() => handleOpenView(request)}
+                          style={{ backgroundColor: '#025BAD' }}
+                        >
+                            <RemoveRedEyeRoundedIcon />
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -141,6 +148,7 @@ export default function DrvAccomplished(){
               />
             </TableContainer>
           </Paper>
+
       {/* view modal*/}
       <Dialog open={openView} onClose={CloseView} fullWidth maxWidth="md">
       <Button onClick={CloseView} style={{ color: 'gray', position: 'absolute', top: 10, right: 0, paddingLeft: 0, paddingRight: 0 }}>
@@ -186,7 +194,7 @@ export default function DrvAccomplished(){
                       </td>
                       <td>
                         <p className="drvreq-details">
-                        {selectedRequest.departure_time}</p>
+                        {dayjs(selectedRequest.departure_time).format("MMMM D, YYYY, h:mm A")}</p>
                       </td>
                     </tr>
                     <tr>
@@ -195,7 +203,7 @@ export default function DrvAccomplished(){
                       </td>
                       <td>
                       <p className="drvreq-details">
-                        {selectedRequest.arrival_time}E</p>
+                      {dayjs(selectedRequest.arrival_time).format("MMMM D, YYYY, h:mm A")}</p>
                       </td>
                     </tr>
                     <tr>
@@ -257,6 +265,42 @@ export default function DrvAccomplished(){
                       {selectedRequest.requested_by}</p>
                       </td>
                     </tr>
+                    {selectedRequest.request_status === 'Accomplished' ? (
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Preventive Maintenance Officer:</p>
+                      </td>
+                      <td>
+                        <p className="empreq-details">
+                          {selectedRequest.pm_officer}
+                        </p>
+                      </td>
+                    </tr>                    
+                  ) : null}
+                  {selectedRequest.request_status === 'Accomplished' ? (
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Approved by:</p>
+                      </td>
+                      <td>
+                        <p className="empreq-details">
+                          {selectedRequest.approved_by}
+                        </p>
+                      </td>
+                    </tr>                    
+                  ) : null}
+                  {selectedRequest.request_status === 'Accomplished' ? (
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Chief Administrative Officer:</p>
+                      </td>
+                      <td>
+                        <p className="empreq-details">
+                          {selectedRequest.ca_officer}
+                        </p>
+                      </td>
+                    </tr>                    
+                  ) : null}
                   </tbody>
                 </table>
                 </div>

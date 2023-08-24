@@ -25,7 +25,15 @@ export async function generateTripTicket(selectedRequest) {
     const textLine7 = `A. To be filled by the Administrative Officer authorizing Official Travel:`;
     const textLine8 = `1. Name of the Driver of the Vehicle: ${driver_name}`;
     const textLine9 = `2. Government Car to be used, Plate No.: ${vehicle_name}`;
-    const textLine10 = `3. Name of Authorized Passenger/s: ${passenger_names}`;
+    // const textLine10 = `3. Name of Authorized Passenger/s: ${passenger_names}`;
+    let textLine10 = "3. Name of Authorized Passenger/s:";
+    const maxPassenger = 4;
+
+    for (let i = 0; i < passenger_names.length; i += maxPassenger) {
+      const line = passenger_names.slice(i, i + maxPassenger).join(',');
+      textLine10 += '\n' + line;
+}
+
     const textLine11 = `4. Places to be visited/inspected: ${destination}`;
     const textLine12 = `5. Purpose/s: ${purpose}`;
 
@@ -54,13 +62,37 @@ export async function generateTripTicket(selectedRequest) {
     const textLine33 = `11. REMARKS: __________________________________________________________________`
     const textLine34 = `I hereby certify to the correctness of the above statements of record of travel.`
 
-    const textLine35 = `_________________`
-    const textLine36 = `             Driver`
+    const textLine35 = `${driver_name}`
+    const textLine36 = `        Driver`
+
 
     const textLine37 = `I hereby certify that I used this Car on official business as stated above.`
 
-    const textLine38 = `______________________              ______________________              ______________________`
-    const textLine39 = `              Passenger                                           Passenger                                           Passenger`
+    // const textLine38 = `${passenger_names.join('      ')}`
+    // // const textLine38_5 = `            ___________________________________                        `.repeat(passenger_count)
+    // const textLine39 = `      Passenger      `.repeat(passenger_count)
+    
+    const passengerNamesLines = [];
+    const maxPassengerNamesPerLine = 4;
+
+    for (let i = 0; i < passenger_names.length; i += maxPassengerNamesPerLine) {
+      const line = passenger_names.slice(i, i + maxPassengerNamesPerLine).join('      ');
+      passengerNamesLines.push(line);
+    }
+
+    const textLine38 = passengerNamesLines.join('\n \n');
+
+    let textLine39 = "";
+    for (let i = 0; i < passenger_count; i++) {
+      textLine39 += "      Passenger          ";
+
+      // Add line break after every 4 passengers
+      if ((i + 1) % maxPassengerNamesPerLine === 0) {
+        textLine39 += '\n \n';
+      }
+    }
+
+
 
     // Get the width of the text
     const textLine1Width = timesRomanFont.widthOfTextAtSize(textLine1, fontSize);
@@ -100,7 +132,8 @@ export async function generateTripTicket(selectedRequest) {
     const centerXLine25 = (width) / 8;
 
     const centerXLine26 = (width - textLine7Width) / 5;
-    const centerXLine27 = (width - textLine1Width) / 2 - 18;
+    const centerXLine27 = (width - textLine1Width) / 2 - 30;
+    const centerXLine38 = (width) / 8;
 
 
     page.drawText(textLine1, {
@@ -175,17 +208,22 @@ export async function generateTripTicket(selectedRequest) {
         color: rgb(0, 0, 0), 
     });
 
-    page.drawText(textLine10, {
+
+
+    const textLine10Lines = textLine10.split('\n');
+    textLine10Lines.forEach((line, index) => {
+      page.drawText(line, {
         x: centerXLine10,
-        y: height - 18   * fontSize, 
+        y: height - (18 + index) * fontSize,
         size: fontSize,
         font: timesRomanFont,
-        color: rgb(0, 0, 0), 
+        color: rgb(0, 0, 0),
+      });
     });
 
     page.drawText(textLine11, {
         x: centerXLine11,
-        y: height - 19   * fontSize, 
+        y: height - 22   * fontSize, 
         size: fontSize,
         font: timesRomanFont,
         color: rgb(0, 0, 0), 
@@ -193,7 +231,7 @@ export async function generateTripTicket(selectedRequest) {
 
     page.drawText(textLine12, {
         x: centerXLine12,
-        y: height - 20   * fontSize, 
+        y: height - 23   * fontSize, 
         size: fontSize,
         font: timesRomanFont,
         color: rgb(0, 0, 0), 
@@ -201,7 +239,7 @@ export async function generateTripTicket(selectedRequest) {
 
     page.drawText(textLine13, {
       x: centerXLine13,
-      y: height - 22   * fontSize, 
+      y: height - 25   * fontSize, 
       size: fontSize,
       font: timesRomanFont,
       color: rgb(0, 0, 0), 
@@ -209,7 +247,7 @@ export async function generateTripTicket(selectedRequest) {
 
     page.drawText(textLine14, {
       x: centerXLine14,
-      y: height - 23   * fontSize, 
+      y: height - 26   * fontSize, 
       size: fontSize,
       font: timesRomanFont,
       color: rgb(0, 0, 0), 
@@ -217,7 +255,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine15, {
     x: centerXLine15,
-    y: height - 24   * fontSize, 
+    y: height - 27   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -225,7 +263,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine16, {
     x: centerXLine16,
-    y: height - 25   * fontSize, 
+    y: height - 28   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -233,7 +271,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine17, {
     x: centerXLine17,
-    y: height - 26   * fontSize, 
+    y: height - 29   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -241,7 +279,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine18, {
     x: centerXLine18,
-    y: height - 27   * fontSize, 
+    y: height - 30   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -249,7 +287,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine19, {
     x: centerXLine19,
-    y: height - 28   * fontSize, 
+    y: height - 31   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -257,7 +295,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine20, {
     x: centerXLine20,
-    y: height - 29   * fontSize, 
+    y: height - 32   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -265,7 +303,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine21, {
     x: centerXLine21,
-    y: height - 30   * fontSize, 
+    y: height - 33   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -273,7 +311,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine22, {
     x: centerXLine22,
-    y: height - 31   * fontSize, 
+    y: height - 34   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -281,7 +319,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine23, {
     x: centerXLine23,
-    y: height - 32   * fontSize, 
+    y: height - 35   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -289,7 +327,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine24, {
     x: centerXLine24,
-    y: height - 33   * fontSize, 
+    y: height - 36   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -297,7 +335,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine25, {
     x: centerXLine25,
-    y: height - 34   * fontSize, 
+    y: height - 37   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -305,7 +343,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine26, {
     x: centerXLine26,
-    y: height - 35   * fontSize, 
+    y: height - 38   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -313,7 +351,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine27, {
     x: centerXLine26,
-    y: height - 36   * fontSize, 
+    y: height - 39   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -321,7 +359,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine28, {
     x: centerXLine26,
-    y: height - 37   * fontSize, 
+    y: height - 40   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -329,7 +367,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine29, {
     x: centerXLine26,
-    y: height - 38   * fontSize, 
+    y: height - 41   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -337,7 +375,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine30, {
     x: centerXLine25,
-    y: height - 39   * fontSize, 
+    y: height - 42   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -345,7 +383,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine31, {
     x: centerXLine25,
-    y: height - 40   * fontSize, 
+    y: height - 43   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -353,7 +391,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine32, {
     x: centerXLine25,
-    y: height - 41   * fontSize, 
+    y: height - 44   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -361,7 +399,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine33, {
     x: centerXLine26,
-    y: height - 42   * fontSize, 
+    y: height - 45   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -369,7 +407,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine34, {
     x: centerXLine27,
-    y: height - 43   * fontSize, 
+    y: height - 47   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -377,7 +415,7 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine35, {
     x: centerXLine4,
-    y: height - 46   * fontSize, 
+    y: height - 51   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
@@ -385,35 +423,39 @@ export async function generateTripTicket(selectedRequest) {
 
   page.drawText(textLine36, {
     x: centerXLine4,
-    y: height - 47   * fontSize, 
+    y: height - 52   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
   });
 
   page.drawText(textLine37, {
-    x: centerXLine1 - 35,
-    y: height - 50   * fontSize, 
-    size: fontSize,
-    font: timesRomanFont,
-    color: rgb(0, 0, 0), 
-  });
-
-  page.drawText(textLine38, {
-    x: centerXLine1 - 100,
+    x: centerXLine27,
     y: height - 54   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
   });
 
-  page.drawText(textLine39, {
-    x: centerXLine1 - 100,
-    y: height - 55   * fontSize, 
+  page.drawText(textLine38, {
+    x: centerXLine1 - 35,
+    y: height - 58   * fontSize, 
     size: fontSize,
     font: timesRomanFont,
     color: rgb(0, 0, 0), 
   });
+
+
+
+  page.drawText(textLine39, {
+    x: centerXLine1 - 33,
+    y: height - 59   * fontSize, 
+    size: fontSize,
+    font: timesRomanFont,
+    color: rgb(0, 0, 0), 
+  });
+
+  
 
     const departureTimeWidth = timesRomanFont.widthOfTextAtSize(departure_time, fontSize);
     const departureTimeX = centerXLine4;
@@ -428,6 +470,11 @@ export async function generateTripTicket(selectedRequest) {
       color: rgb(0, 0, 0),
       borderColor: rgb(0, 0, 0),
     });
+
+
+
+
+
 
     const pdfBytes = await pdfDoc.save();
 

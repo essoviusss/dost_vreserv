@@ -113,6 +113,14 @@
   .status-button.ForApproval {
     background-color: #025BAD;
   }
+
+  .status-button.Accomplished {
+    background-color: #f26419;
+  }
+
+  .status-button.NotAccomplished {
+    background-color: #6e6e6e;
+  }
   
   .status-button-container {
     margin: auto;

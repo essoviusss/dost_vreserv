@@ -62,10 +62,10 @@ const Sidebar = () => {
               <CDBSidebarMenuItem style={location.pathname === '/DrvDashboard' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/DrvDashboard' ? 'text-primary' : 'text-gray'} icon="columns" iconClassName={`fa-columns ${location.pathname === '/DrvDashboard' ? 'active-icon' : ''}`}><span>Dashboard</span></CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="/DrvRequestLogs" activeClassName="activeClicked">
-              <CDBSidebarMenuItem style={location.pathname === '/DrvRequestLogs' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/DrvRequestLogs' ? 'text-primary' : 'text-gray'} icon="user" iconClassName={`fa-user ${location.pathname === '/DrvRequestLogs' ? 'active-icon' : ''}`}>Request Logs</CDBSidebarMenuItem>
+              <CDBSidebarMenuItem style={location.pathname === '/DrvRequestLogs' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/DrvRequestLogs' ? 'text-primary' : 'text-gray'} icon="file" iconClassName={`fa-file ${location.pathname === '/DrvRequestLogs' ? 'active-icon' : ''}`}>Request Logs</CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="/DrvAccomplished" activeClassName="activeClicked">
-              <CDBSidebarMenuItem style={location.pathname === '/DrvAccomplished' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/DrvAccomplished' ? 'text-primary' : 'text-gray'} icon="user" iconClassName={`fa-user ${location.pathname === '/DrvAccomplished' ? 'active-icon' : ''}`}>History</CDBSidebarMenuItem>
+              <CDBSidebarMenuItem style={location.pathname === '/DrvAccomplished' ? {backgroundColor: '#EBF1FF', borderRadius: '15px', padding: '5px'} : {borderRadius: '10px', padding: '5px'}} className={location.pathname === '/DrvAccomplished' ? 'text-primary' : 'text-gray'} icon="history" iconClassName={`fa-history ${location.pathname === '/DrvAccomplished' ? 'active-icon' : ''}`}>History</CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>

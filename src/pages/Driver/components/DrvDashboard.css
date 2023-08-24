@@ -358,3 +358,16 @@
   margin-top: 2%;
   margin-left: 2%;
 }
+
+/* calendar */
+/* .calendar-top{
+  
+} */
+.calendar-top1{
+  padding: 4%;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  color: #1A2458;
+    font-weight: bold;
+    font-size: 18px;
+    align-self: flex-start;
+}

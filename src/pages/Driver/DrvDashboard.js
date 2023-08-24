@@ -159,13 +159,13 @@ export default function DrvDashboard() {
               <div className="donut-title">Scheduled Travels</div>
               <div className="donut-accomplished">
                 <CircleRoundedIcon style={{ fontSize: 20, color: '#025BAD' }} /> &nbsp;
-                <div className="percentage">{accomplishedReqPercentage}%</div> &nbsp;
+                <div className="percentage">{accomplishedReqPercentage.toFixed(2)}%</div> &nbsp;
                 <div className="per-label">Accomplished</div>
                 <div className="count-label">({accomplishedReq} Travels)</div>
               </div>
               <div className="donut-unaccomplished">
               <CircleRoundedIcon style={{ fontSize: 20, color: '#D9D9D9' }} />  &nbsp;
-                <div className="percentage">{notAccomplishedReqPercentage}%</div> &nbsp;
+                <div className="percentage">{notAccomplishedReqPercentage.toFixed(2)}%</div> &nbsp;
                 <div className="per-label">Not accomplished</div>
                 <div className="count-label">({notAccomplishedReq} Travels)</div>
               </div>
@@ -300,9 +300,12 @@ export default function DrvDashboard() {
             </div>
         
           <div className="drv-child4">
+            <div className="calendar-top1">
+              Calendar
+            </div>
             <Calendar/>
           </div>
-        </div>
+          </div>
     </div>
   );
 }

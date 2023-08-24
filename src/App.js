@@ -21,6 +21,7 @@ import { FormDataProvider } from './pages/Employee/FormDataContext';
 import Sidebar from './Sidebar/Sidebar';
 import DriverSidebar from './Sidebar/DriverSidebar';
 import DrvAccomplished from './pages/Driver/DrvAccomplished';
+import EmpTravelHistory from './pages/Employee/EmpTravelHistory';
 import useAuth from './hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
@@ -89,6 +90,7 @@ function MainContent() {
           <Route path="/EmpEditStep2" element={<EmpEditStep2 />} />
           <Route path="/EmpHistory" element={<EmpHistory />} />
           <Route path="/EmpSummary" element={<EmpSummary />} />
+          <Route path="/EmpTravelHistory" element={<EmpTravelHistory />} />
           <Route path="/DrvDashboard" element={<DrvDashboard />} />
           <Route path="/DrvRequestLogs" element={<DrvRequestLogs />} />
           <Route path="/DrvRequestLogs" element={<DrvRequestLogs />} />

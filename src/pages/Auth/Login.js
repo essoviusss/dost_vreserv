@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import '../Auth/components/Login.css';
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../GlobalCSS/ToastStyles.css';
 //MUI
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -41,11 +44,18 @@ export default function Login(){
 
   //Carousel Images
   const images = [
-    'https://via.placeholder.com/800x800/11508e/FFFFFF?text=Image+1',
-    'https://via.placeholder.com/800x800/1976d2/FFFFFF?text=Image+2',
-    'https://via.placeholder.com/800x800/4e9cea/FFFFFF?text=Image+3',
+    '/images/carousel1st.gif',
+    '/images/carousel2nd.gif',
+    '/images/carousel3rd.gif',
   ];
   
+  //Carousel texts
+  const slideTexts = [
+    ['Seamless Reservation', 'Book with Ease: Experience a seamless reservation process for a stress-free start to your journey.'],
+    ['Approval Workflow', 'Seamless Approval Process: Get the green light for your vehicle reservations, ensuring accountability at every step.'],
+    ['Vehicle Management', 'Efficient Operations, Maximized Potential: Optimize vehicle allocation and maintenance for seamless performance.'],
+  ];
+
   //Select Form Validation
   const [selectError, setSelectError] = useState(false);
   const validateSelect = () => {
@@ -106,7 +116,7 @@ export default function Login(){
   
       if (token) {
         if (userRole === "Employee") {
-            navigate("/EmpDashboard", { replace: true });
+            navigate("/EmpVehicleRequest", { replace: true });
         } else if (userRole === "Driver") {
             navigate("/DrvDashboard", { replace: true });
         }
@@ -130,7 +140,7 @@ export default function Login(){
       
           if (response.data.message !== "Success") {
             console.log("Login failed:", response.data.message);
-            alert(response.data.message);
+            toast.error(response.data.message);
    
             return;
           }
@@ -141,31 +151,32 @@ export default function Login(){
           const empName = await response.data.empName;
       
           if (userRole === "Employee" && role === "Employee") {
-            alert("Login Successful");
+            toast.success("Login Successful");
             localStorage.setItem("token", jwtToken);
             localStorage.setItem("userRole", userRole);
             localStorage.setItem("email", email);
             localStorage.setItem("empName", empName);
             console.log(empName);
-            navigate("/EmpDashboard", { replace: true });
+            navigate("/EmpVehicleRequest", { replace: true });
         } else if (userRole === "Driver" && role === "Driver") {
-            alert("Login Successful");
+            toast.success("Login Successful");
             localStorage.setItem("token", jwtToken);
             localStorage.setItem("userRole", userRole);
             localStorage.setItem("email", email); 
             localStorage.setItem("userId", userId);
             navigate("/DrvDashboard", { replace: true });
         } else {
-            alert("User does not exist");
+            toast.error("User does not exist");
         }
         } catch (error) {
           console.error("Error:", error);
-          alert(error);
+          toast.error(error);
         }
       };
       
   return(
     <ThemeProvider theme={theme}>
+      <ToastContainer />
       <div className="login-container">
         <div class="column left">
           <div className="display-container">
@@ -173,21 +184,25 @@ export default function Login(){
               <img className="logo-overlay" src="/images/white_logo.png" alt="logo" />
               <span className="vreserv-text">VRESERV</span>
             </div>
-            <Carousel
-              className="carousel-container"
-              autoPlay
-              infiniteLoop
-              showStatus={false}
-              showIndicators={true}
-              showThumbs={false}
-              interval={3000}
-            >
-              {images.map((image, index) => (
-                <div key={index}>
-                  <img src={image} alt={`Slide ${index + 1}`} />
-                </div>
-              ))}
-            </Carousel>
+            <div className="carousel-wrapper">
+              <Carousel
+                className="carousel-container"
+                autoPlay
+                infiniteLoop
+                showStatus={false}
+                showIndicators={true}
+                showThumbs={false}
+                interval={3000}
+              >
+                {images.map((image, index) => (
+                  <div key={index}>
+                    <img src={image} alt={`Slide ${index + 1}`} />
+                    <p className="header-text">{slideTexts[index][0]}</p>
+                    <p className="subtitle-text">{slideTexts[index][1]}</p>
+                  </div>
+                ))}
+              </Carousel>
+            </div>
           </div>
         </div>
         <div class="column right">

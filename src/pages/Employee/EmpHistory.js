@@ -18,6 +18,7 @@ import '../Employee/components/EmpRequestLogs.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { BASE_URL } from '../../constants/api_url';
+import dayjs from "dayjs";
 
 export default function EmpHistory(){
   //font
@@ -101,7 +102,7 @@ export default function EmpHistory(){
                     <TableCell style={{ textAlign: 'center', padding: 0 }}>
                       <div style={{ 
                         backgroundColor: 
-                          request.request_status === "Accomplished" ? 'green' :
+                          request.request_status === "Accomplished" ? '#f26419' :
                           request.request_status === "Disapproved" ? '#b21127' :
                           request.request_status === "Cancelled" ? '#6e6e6e' : 'inherit',
                         color: 'white',
@@ -181,7 +182,7 @@ export default function EmpHistory(){
                       </td>
                       <td>
                         <p className="empreq-details">
-                        {selectedRequest.departure_time}</p>
+                        {dayjs(selectedRequest.departure_time).format("MMMM D, YYYY, h:mm A")}</p>
                       </td>
                     </tr>
                     <tr>
@@ -190,7 +191,7 @@ export default function EmpHistory(){
                       </td>
                       <td>
                       <p className="empreq-details">
-                        {selectedRequest.arrival_time}E</p>
+                      {dayjs(selectedRequest.arrival_time).format("MMMM D, YYYY, h:mm A")}</p>
                       </td>
                     </tr>
                     <tr>
@@ -269,6 +270,55 @@ export default function EmpHistory(){
                       {selectedRequest.requested_by}</p>
                       </td>
                     </tr>
+                    {selectedRequest.request_status === 'Accomplished' ? (
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Preventive Maintenance Officer:</p>
+                      </td>
+                      <td>
+                        <p className="empreq-details">
+                          {selectedRequest.pm_officer}
+                        </p>
+                      </td>
+                    </tr>                    
+                  ) : null}
+                  {selectedRequest.request_status === 'Accomplished' ? (
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Approved by:</p>
+                      </td>
+                      <td>
+                        <p className="empreq-details">
+                          {selectedRequest.approved_by}
+                        </p>
+                      </td>
+                    </tr>                    
+                  ) : null}
+                  {selectedRequest.request_status === 'Accomplished' ? (
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Chief Administrative Officer:</p>
+                      </td>
+                      <td>
+                        <p className="empreq-details">
+                          {selectedRequest.ca_officer}
+                        </p>
+                      </td>
+                    </tr>                    
+                  ) : null}
+
+                    {selectedRequest.request_status === 'Cancelled' || selectedRequest.request_status === 'Disapproved' ? (
+                    <tr>
+                      <td className="table-label-empreq">
+                        <p className="header-label-empreq">Remarks:</p>
+                      </td>
+                      <td>
+                        <p className="empreq-details">
+                          {selectedRequest.reason}
+                        </p>
+                      </td>
+                    </tr>
+                  ) : null}
                   </tbody>
                 </table>
                 </div>

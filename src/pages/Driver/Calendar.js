@@ -63,14 +63,18 @@ const Calendar = () => {
       const date = `${year}-${month.toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
       const markedDateObj = markedDates.find(obj => obj.dates.includes(date));
   
-      let cellStyle = {};
+      let cellStyle = {
+        borderRadius: '50px',
+        width: '35px',
+        height: '35px',
+      };
       if (markedDateObj) {
         if (markedDateObj.request_status === 'Pending') {
-          cellStyle.backgroundColor = 'yellow';
+          cellStyle.backgroundColor = '#ffe1a1';
         } else if (markedDateObj.request_status === 'Approved') {
-          cellStyle.backgroundColor = 'green';
+          cellStyle.backgroundColor = '#BCF5BE';
         } else if (markedDateObj.request_status === 'For Approval'){
-          cellStyle.backgroundColor = 'blue';
+          cellStyle.backgroundColor = '#9ED1FF';
         }
       }
   
@@ -93,7 +97,7 @@ const Calendar = () => {
     <div className="calendar">
       <div className="calendar-header">
         <button onClick={handlePreviousMonth}>&lt;</button>
-        <h2>{`${getMonthName(month)} ${year}`}</h2>
+        <div className='calendar-month'>{`${getMonthName(month)} ${year}`}</div>
         <button onClick={handleNextMonth}>&gt;</button>
       </div>
       <div className="calendar-weekdays">

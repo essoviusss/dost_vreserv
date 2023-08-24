@@ -1,6 +1,10 @@
 import '../Driver/components/DrvRequestLogs.css';
+import '../Driver/components/ModalStyles.css';
 import Header from "../../header/header";
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../GlobalCSS/ToastStyles.css';
 import axios from "axios";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -10,10 +14,15 @@ import DialogActions from '@mui/material/DialogActions';
 import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { generateTripTicket } from '../../utils/pdfUtils';
 import DialogTitle from '@mui/material/DialogTitle';
 import { BASE_URL } from '../../constants/api_url';
+import dayjs from "dayjs";
+
+//material ui icons
+import RemoveRedEyeRoundedIcon from '@mui/icons-material/RemoveRedEyeRounded';
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 export default function DrvRequestLogs() {
   //font
@@ -132,9 +141,9 @@ export default function DrvRequestLogs() {
 
     const response = await axios.post(url, fData);
     if (response.data.message === "Success") {
-      alert("Accomplished");
+      toast.success("Accomplished");
     } else {
-      alert("Madi");
+      toast.error("Accomplishment failed!");
     }
     CloseEdit();
   }
@@ -149,18 +158,16 @@ export default function DrvRequestLogs() {
   
       const response = await axios.post(url, fData);
       if (response.data.message === "Success") {
-        alert("Not Accomplished");
+        toast.success("Not Accomplished");
       } else {
-        alert("Madi");
+        toast.error("Error");
       }
       CloseEdit();
     }
 
-
-  
-
   return (
     <ThemeProvider theme={theme}>
+      <ToastContainer />
       <div className="page-container">
         <Header />
         <div className="rlogs-text">Requests</div>
@@ -213,20 +220,34 @@ export default function DrvRequestLogs() {
                       </TableCell>
 
                       <TableCell style={{ textAlign: 'center' }}>
-                        <Button variant="contained" onClick={() => handleOpenView(request)}>
-                          View Details
+                      <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+                        <Button
+                          variant="contained"
+                          onClick={() => handleOpenView(request)}
+                          style={{ backgroundColor: '#025BAD' }}
+                        >
+                          <RemoveRedEyeRoundedIcon />
                         </Button>
-
+                        <Button
+                          variant="contained"
+                          onClick={() => handleAccomplished(request)}
+                          disabled={request.request_status !== "Approved"}
+                          style={{ backgroundColor: '#025BAD' }}
+                        >
+                          <CheckRoundedIcon />
+                        </Button>
+                        <Button
+                          variant="contained"
+                          onClick={() => handleNotAccomplished(request)} 
+                          disabled={request.request_status !== "Approved"}
+                          style={{ backgroundColor: '#025BAD' }}
+                        >
+                          <CloseRoundedIcon />
+                        </Button>
                         {/* <Button variant="contained" disabled={request.request_status !== "Approved"} >
                           /
                         </Button> */}
-                        <Button variant="contained" onClick={() => handleAccomplished(request)}  disabled={request.request_status !== "Approved"}>
-                          /
-                        </Button>
-
-                        <Button variant="contained" onClick={() => handleNotAccomplished(request)}  disabled={request.request_status !== "Approved"}>
-                            X
-                        </Button>
+                        </div>
                       </TableCell>
                       {/* <TableCell style={{ textAlign: 'center' }}>
                         {request.request_status === "Approved" && (
@@ -299,7 +320,7 @@ export default function DrvRequestLogs() {
                         </td>
                         <td>
                           <p className="drvreq-details">
-                          {selectedRequest.departure_time}</p>
+                          {dayjs(selectedRequest.departure_time).format("MMMM D, YYYY, h:mm A")}</p>
                         </td>
                       </tr>
                       <tr>
@@ -308,7 +329,7 @@ export default function DrvRequestLogs() {
                         </td>
                         <td>
                         <p className="drvreq-details">
-                          {selectedRequest.arrival_time}E</p>
+                        {dayjs(selectedRequest.arrival_time).format("MMMM D, YYYY, h:mm A")}</p>
                         </td>
                       </tr>
                       <tr>
@@ -384,41 +405,103 @@ export default function DrvRequestLogs() {
         </Dialog>
       
       {/* Accomplished modal */}
-
-      <Dialog open={openAccomplished} onClose={CloseAccomplished} fullWidth maxWidth="sm">
-      <DialogTitle className="dialog-title">
-        {/* <img className="edit-logo" src="/images/edit_logo.png" /> */}
-        <div className="dialog-title-content">
-          <h1>Confirmation</h1>
-          <p>Are you sure you want to approve this request?</p>         
-        </div>
-      </DialogTitle>
-      <hr className="dtitle-hr" /> 
-        <DialogActions>
-          <Button onClick={CloseAccomplished} style={{ color: '#025BAD', fontFamily: 'Poppins' }}>Cancel</Button>
-          <Button onClick={handleUpdateAccomplished} style={{ color: '#025BAD', fontFamily: 'Poppins' }} >Confirm</Button>
-        </DialogActions>
+      <Dialog open={openAccomplished} onClose={CloseAccomplished} fullWidth maxWidth="xs">
+        <DialogContent>
+          <div className='modal-icon'>
+            <img className="modal-svg" src="/svg/accomplished_icon.svg" />
+          </div>
+          <DialogContentText>
+            <div className='modal-title'>Are you sure?</div>
+            <div className='modal-subtitle'>Have you already accomplished this scheduled travel? This action cannot be undone.</div>
+          </DialogContentText>
+        </DialogContent>
+        <div class="button-container">
+          <Button
+            onClick={CloseAccomplished}
+            style={{
+              backgroundColor: 'rgb(92, 92, 92)',
+              borderRadius: '3px',
+              color: 'white',
+              margin: '0 7px 40px 0',
+              textTransform: 'none',
+              width: '120px',
+              fontFamily: 'Poppins, sans-serif',
+              transition: 'background-color 0.3s',
+            }}
+            onMouseEnter={e => e.target.style.backgroundColor = '#474747'}
+            onMouseLeave={e => e.target.style.backgroundColor = 'rgb(92, 92, 92)'}
+          >
+            No
+          </Button>
+          <Button
+            className="confirm-acc"
+            onClick={handleUpdateAccomplished}
+            style={{
+              backgroundColor: '#006600',
+              borderRadius: '3px',
+              color: 'white',
+              margin: '0 0 40px 7px',
+              textTransform: 'none',
+              width: '120px',
+              fontFamily: 'Poppins, sans-serif',transition: 'background-color 0.3s',
+            }}
+            onMouseEnter={e => e.target.style.backgroundColor = '#094609'}
+            onMouseLeave={e => e.target.style.backgroundColor = '#006600'}
+          >
+            Yes
+          </Button>
+        </div>                    
       </Dialog>
 
-      {/* Accomplished modal */}
-
-      <Dialog open={openNotAccomplished} onClose={CloseNotAccomplished} fullWidth maxWidth="sm">
-      <DialogTitle className="dialog-title">
-        {/* <img className="edit-logo" src="/images/edit_logo.png" /> */}
-        <div className="dialog-title-content">
-          <h1>Confirmation</h1>
-          <p>Not Accomplished?</p>         
-        </div>
-      </DialogTitle>
-      <hr className="dtitle-hr" /> 
-        <DialogActions>
-          <Button onClick={CloseNotAccomplished} style={{ color: '#025BAD', fontFamily: 'Poppins' }}>Cancel</Button>
-          <Button onClick={handleUpdateNotAccomplished} style={{ color: '#025BAD', fontFamily: 'Poppins' }} >Confirm</Button>
-        </DialogActions>
+      {/* Cancel modal */}
+      <Dialog open={openNotAccomplished} onClose={CloseNotAccomplished} fullWidth maxWidth="xs">
+        <DialogContent>
+          <div className='modal-icon'>
+            <img className="modal-svg" src="/svg/delete_icon.svg" />
+          </div>
+          <DialogContentText>
+            <div className='modal-title'>Are you sure?</div>
+            <div className='modal-subtitle'>Was this scheduled travel cancelled? This action cannot be undone.</div>
+          </DialogContentText>
+        </DialogContent>
+        <div class="button-container">
+          <Button
+            onClick={CloseNotAccomplished}
+            style={{
+              backgroundColor: 'rgb(92, 92, 92)',
+              borderRadius: '3px',
+              color: 'white',
+              margin: '0 7px 40px 0',
+              textTransform: 'none',
+              width: '120px',
+              fontFamily: 'Poppins, sans-serif',
+              transition: 'background-color 0.3s',
+            }}
+            onMouseEnter={e => e.target.style.backgroundColor = '#474747'}
+            onMouseLeave={e => e.target.style.backgroundColor = 'rgb(92, 92, 92)'}
+          >
+            No
+          </Button>
+          <Button
+            className="confirm-acc"
+            onClick={handleUpdateNotAccomplished}
+            style={{
+              backgroundColor: '#cf0a0a',
+              borderRadius: '3px',
+              color: 'white',
+              margin: '0 0 40px 7px',
+              textTransform: 'none',
+              width: '120px',
+              fontFamily: 'Poppins, sans-serif',transition: 'background-color 0.3s',
+            }}
+            onMouseEnter={e => e.target.style.backgroundColor = '#b00909'}
+            onMouseLeave={e => e.target.style.backgroundColor = '#cf0a0a'}
+          >
+            Yes
+          </Button>
+        </div>                    
       </Dialog>
-
       
-
       </div>
     </ThemeProvider>
   );
